@@ -1937,9 +1937,9 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 
 		ob_start();
 
-		$keyword = filter_input( INPUT_GET, 'keyword', FILTER_SANITIZE_STRING );
+		$keyword = isset( $_GET['keyword'] ) ? sanitize_text_field( $_GET['keyword'] ) : '';
 		if ( ! $keyword ) {
-			$keyword = filter_input( INPUT_POST, 'keyword', FILTER_SANITIZE_STRING );
+			$keyword = isset( $_POST['keyword'] ) ? sanitize_text_field( $_POST['keyword'] ) : '';
 		}
 		if ( empty( $keyword ) ) {
 			die();
@@ -1972,7 +1972,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			die();
 		}
 		ob_start();
-		$keyword = filter_input( INPUT_GET, 'keyword', FILTER_SANITIZE_STRING );
+		$keyword = isset( $_GET['keyword'] ) ? sanitize_text_field( $_GET['keyword'] ) : '';
 		if ( empty( $keyword ) ) {
 			die();
 		}
@@ -2005,7 +2005,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			die();
 		}
 		ob_start();
-		$keyword = filter_input( INPUT_GET, 'keyword', FILTER_SANITIZE_STRING );
+		$keyword = isset( $_GET['keyword'] ) ? sanitize_text_field( $_GET['keyword'] ) : '';
 		if ( empty( $keyword ) ) {
 			die();
 		}
@@ -2057,7 +2057,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			die();
 		}
 		ob_start();
-		$keyword = filter_input( INPUT_GET, 'keyword', FILTER_SANITIZE_STRING );
+		$keyword = isset( $_GET['keyword'] ) ? sanitize_text_field( $_GET['keyword'] ) : '';
 		if ( empty( $keyword ) ) {
 			die();
 		}
