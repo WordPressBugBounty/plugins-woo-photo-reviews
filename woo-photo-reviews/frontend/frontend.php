@@ -530,10 +530,11 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
 					$product_price             = apply_filters( 'woocommerce_photo_reviews_reminder_product_price', $product->get_price_html(), $product, $order );
 					do_action('viwcpr_reminder_after_get_product_html', $order, $products);
 					ob_start();
+                    $target_link = apply_filters('viwcpr_hook_target_link_product', '_blank');
 					?>
                     <tr>
                         <td style="text-align: center;">
-                            <a target="_blank" href="<?php echo esc_url($product_url) ?>">
+                            <a target="<?php echo esc_attr($target_link);?>" href="<?php echo esc_url($product_url) ?>">
                                 <img style="width: 150px;"
                                      src="<?php echo esc_url($product_image) ?>"
                                      alt="<?php echo esc_attr($product_title) ?>">
@@ -541,10 +542,10 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                         </td>
                         <td>
                             <p>
-                                <a target="_blank" href="<?php echo esc_url($product_url) ?>"><?php echo wp_kses_post($product_title) ?></a>
+                                <a target="<?php echo esc_attr($target_link);?>" href="<?php echo esc_url($product_url) ?>"><?php echo wp_kses_post($product_title) ?></a>
                             </p>
                             <p><?php echo wp_kses($product_price, VI_WOO_PHOTO_REVIEWS_DATA::extend_post_allowed_html()) ?></p>
-                            <a target="_blank"
+                            <a target="<?php echo esc_attr($target_link);?>"
                                style="text-align: center;padding: 10px;text-decoration: none;font-weight: 800;
                                        background-color:<?php echo esc_attr($this->settings->get_params( 'followup_email', 'review_button_bg_color') ); ?>;
                                        color:<?php echo esc_attr($this->settings->get_params( 'followup_email', 'review_button_color' )) ?>;"
