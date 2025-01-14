@@ -672,6 +672,10 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
 				return;
 			}
 		}
+        /*Check require photo to send email 14-01-2025*/
+        if ( 'on' == $this->settings->get_params( 'coupon', 'require' )['photo'] && ! get_comment_meta( $comment_id, 'reviews-images', true ) ) {
+            return;
+        }
 
 		if ( $comment->comment_approved != 1 ) {
 			update_comment_meta( $comment_id, 'coupon_for_reviews', "0" );

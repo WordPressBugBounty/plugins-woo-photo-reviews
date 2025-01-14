@@ -5,7 +5,7 @@ Tags: woocommerce reviews,product reviews image, customer reviews, review remind
 Requires at least: 5.0
 Tested up to: 6.7.2
 Requires PHP: 7.0
-WC tested up to: 9.4.3
+WC tested up to: 9.5.2
 WC requires at least: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -346,7 +346,7 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 
 - [Project Page](https://villatheme.com)
 - [Documentation](http://docs.villatheme.com/?item=woocommerce-photo-reviews)
-- [Report Bugs/Issues](https://villatheme.com/supports)
+- [Report Bugs/Issues](https://villatheme.com/knowledge-base/security-is-our-priority/)
 
 == Frequently Asked Questions ==
 
@@ -365,6 +365,11 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Images and rating of comments for admin to moderate
 
 == Changelog ==
+/**1.2.15 - 2025.01.14**/
+– Fixed: Fixed option "Photo is required" not working
+– Updated: Compatible with  WC 9.5.2
+– Updated: Update support class
+
 /**1.2.14 - 2024.12.13**/
 - Dev: Added the filter hook "viwcpr_hook_target_link_product" to customize the target attribute value of the <a> tag (default: _blank).
 – Updated: Compatible with WP 6.7.2 and  WC 9.4.3
