@@ -5,7 +5,7 @@ Tags: woocommerce reviews,product reviews image, customer reviews, review remind
 Requires at least: 5.0
 Tested up to: 6.7.2
 Requires PHP: 7.0
-WC tested up to: 9.5.2
+WC tested up to: 9.7.0
 WC requires at least: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -365,6 +365,11 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Images and rating of comments for admin to moderate
 
 == Changelog ==
+/**1.2.16 - 2025.03.06**/
+– Fixed: Fixed get_date_completed()
+– Updated: Compatible with WC 9.7.0
+– Updated: Update support class
+
 /**1.2.15 - 2025.01.14**/
 – Fixed: Fixed option "Photo is required" not working
 – Updated: Compatible with  WC 9.5.2
