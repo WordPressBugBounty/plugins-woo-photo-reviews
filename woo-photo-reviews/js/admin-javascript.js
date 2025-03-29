@@ -179,14 +179,23 @@ jQuery(document).ready(function ($) {
     $('.color-picker').click(function (event) {
         event.stopPropagation();
     });
-    $('#reviews_display1').on('click', function () {
-        $('.masonry-options').show();
-        $('.default-options').hide();
-    });
-    $('#reviews_display2').on('click', function () {
-        $('.masonry-options').hide();
-        $('.default-options').show();
-    });
+
+    $('input[name="reviews_display"]').on('change', function () {
+        let t= $(this),
+            t_val = t.val(),
+        t_closest = t.closest('.wcpr-option-frontend-style'),
+        t_label = t_closest.find('label');
+        $('.wcpr-option-frontend-style').find('label').removeClass('wcpr-option-active');
+        t_label.addClass('wcpr-option-active');
+
+        if(t_val === '1'){
+            $('.masonry-options').show();
+            $('.default-options').hide();
+        }else if(t_val === '2'){
+            $('.masonry-options').hide();
+            $('.default-options').show();
+        }
+    }).trigger('change');
 
     /*preview email*/
     $('.preview-emails-html-overlay').on('click', function () {
