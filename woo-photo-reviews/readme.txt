@@ -3,9 +3,9 @@ Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: woocommerce reviews,product reviews image, customer reviews, review reminder, coupon
 Requires at least: 5.0
-Tested up to: 6.7.2
+Tested up to: 6.8.0
 Requires PHP: 7.0
-WC tested up to: 9.7.1
+WC tested up to: 9.8.1
 WC requires at least: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -25,7 +25,9 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 
 >[Try the Demo](https://new2new.com/?item=woocommerce-photo-reviews "Demo Photo Reviews for WooCommerce") | [Documents](http://docs.villatheme.com/?item=woocommerce-photo-reviews "Documents")| [Premium Version](https://1.envato.market/L3WrM "Premium Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
 
-[youtube https://youtu.be/NrBpji8SovQ]
+### Preview Photo Reviews for WooCommerce
+
+[youtube https://youtu.be/cIJRgHJ82tY]
 
 ### IMPORTANT NOTICE
 
@@ -383,6 +385,10 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Images and rating of comments for admin to moderate
 
 == Changelog ==
+/**1.2.18 - 2025.04.11**/
+– Updated: Compatible with WP 6.8 and WC 9.8.1
+– Updated: Update support class
+
 /**1.2.17 - 2025.03.29**/
 – Updated: Compatible with WC 9.7.1
 – Updated: Update support class
@@ -399,11 +405,11 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 
 /**1.2.14 - 2024.12.13**/
 - Dev: Added the filter hook "viwcpr_hook_target_link_product" to customize the target attribute value of the <a> tag (default: _blank).
-– Updated: Compatible with WP 6.7.2 and  WC 9.4.3
+– Updated: Compatible with WP 6.7.2 and WC 9.4.3
 – Updated: Update support class
 
 /**1.2.13 - 2024.11.21**/
-– Updated: Compatible with WP 6.7 and  WC 9.4
+– Updated: Compatible with WP 6.7 and WC 9.4
 – Updated: Update support class
 
 /**1.2.12 - 2024.07.02**/
