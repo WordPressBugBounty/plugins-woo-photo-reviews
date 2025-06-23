@@ -41,18 +41,45 @@ foreach ( $my_comments as $v ) {
 								$image_alt      = $alt ? $alt : $product_title;
 								$data_image_src = wp_get_attachment_image_url( $img_post_id, 'full' );
 								$thumb          = wp_get_attachment_thumb_url( $img_post_id );
+								$is_video           = strpos( $image_data['mime_type'] ?? '', 'video/' ) === 0;
+                                echo '<pre class="prrreeee">'.print_r($image_data,true).'</pre>';
 								if (strpos($data_image_src,'.gif') ){
 									$href = $data_image_src;
 								}else {
 									$href = ( isset( $image_data['sizes']['wcpr-photo-reviews'] ) ? wp_get_attachment_image_url( $img_post_id, 'wcpr-photo-reviews' ) : ( isset( $image_data['sizes']['medium_large'] ) ? wp_get_attachment_image_url( $img_post_id, 'medium_large' ) : ( isset( $image_data['sizes']['medium'] ) ? wp_get_attachment_image_url( $img_post_id, 'medium' ) : $data_image_src ) ) );
 								}
-								printf('<div class="reviews-images-wrap"><a data-image_index="%s" data-image_src="%s" data-image_caption="" rel="nofollow" href="%s"><img class="reviews-images" loading="lazy" src="%s" alt="%s"/></a></div>',
-									esc_attr( $img_post_ids_k ),esc_attr( $data_image_src ),esc_url( apply_filters( 'woocommerce_photo_reviews_masonry_thumbnail_main', $href, $img_post_id ) ),
-									esc_url( $thumb ),esc_attr( $image_alt ));
+								if ( $is_video ) {
+									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" data-image_src="%s" data-image_caption="%s" href="%s"><video class="reviews-images reviews-videos" src="%s"  >%s</video></a></div>',
+										esc_attr( $img_post_ids_k ), esc_attr( $data_image_src ), esc_attr( $data_image_caption ),
+										esc_url( apply_filters( 'woocommerce_photo_reviews_masonry_thumbnail_main', $href, $img_post_id ) ),
+										 esc_url( $href ), esc_attr( $image_alt )
+									);
+								} else {
+									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" data-image_src="%s" data-image_caption="" rel="nofollow" href="%s"><img class="reviews-images" loading="lazy" src="%s" alt="%s"/></a></div>',
+										esc_attr( $img_post_ids_k ), esc_attr( $data_image_src ), esc_url( apply_filters( 'woocommerce_photo_reviews_masonry_thumbnail_main', $href, $img_post_id ) ),
+										esc_url( $thumb ), esc_attr( $image_alt ) );
+								}
 							}else{
-								printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><img class="reviews-images" loading="lazy" src="%s" alt="%s"></a></div>',
-									 esc_attr( $img_post_ids_k ), esc_attr( $img_post_id ),esc_url( $img_post_id ),esc_attr( $product_title )
-								);
+								$file_type = explode( '.', $img_post_id );
+								$file_type = end( $file_type );
+								if ( ! in_array( 'image/' . strtolower( $file_type ), $settings->get_params( 'upload_allow_images' ) ) ) {
+									if ( strpos( $img_post_id, '.mp4' ) || strpos( $img_post_id, '.webm' )|| strpos( $img_post_id, '.mov' ) ) {
+										printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><video class="reviews-images reviews-videos" src="%s" >%s</video></a></div>',
+											 esc_attr( $img_post_ids_k ), esc_attr( $img_post_id ),
+											 esc_url( $img_post_id ), esc_attr( $product_title )
+										);
+									} else {
+										printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><video class="reviews-images reviews-iframe" src="%s" >%s</video></a></div>',
+											 esc_attr( $img_post_ids_k ), esc_attr( $img_post_id ),
+											 esc_url( $img_post_id ), esc_attr( $product_title )
+										);
+									}
+								} else {
+									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><img class="reviews-images" loading="lazy" src="%s" alt="%s"></a></div>',
+										esc_attr( $img_post_ids_k ), esc_attr( $img_post_id ),esc_url( $img_post_id ),esc_attr( $product_title )
+									);
+								}
+
 							}
 						}
 					}
@@ -65,7 +92,8 @@ foreach ( $my_comments as $v ) {
 					$image_data        = wp_get_attachment_metadata( $first_ele );
 					$alt               = get_post_meta( $first_ele, '_wp_attachment_image_alt', true );
 					$image_alt         = $alt ? $alt : $product_title;
-					$data_original_src = wp_get_attachment_url( $first_ele );
+					$is_video          = strpos( $image_data['mime_type'] ?? '', 'video/' ) === 0;
+					$data_original_src = $is_video ? wp_get_attachment_url( $first_ele ) : wp_get_attachment_image_url( $first_ele, 'full' );
 					$src        = $data_original_src;
 					$img_width         = $image_data['width'] ?? '';
 					$img_height        = $image_data['height'] ?? '';
@@ -75,9 +103,18 @@ foreach ( $my_comments as $v ) {
 						$img_width  = $image_data['sizes'][ $img_type ]['width'] ?? '';
 						$img_height = $image_data['sizes'][ $img_type ]['height'] ?? '';
 					}
-					printf('<div class="reviews-images-wrap-right"><img class="reviews-images" data-original_src="%s" src="%s" alt="%s" loading="lazy"  width="%s" height="%s"></div>',
-						esc_attr( $data_original_src ),esc_url( apply_filters( 'woocommerce_photo_reviews_masonry_thumbnail_main', $src, $first_ele ) ),
-                        esc_attr( $image_alt ),esc_attr( $img_width ),esc_attr( $img_height ));
+					if ( $is_video ) {
+						printf( '<div class="reviews-images-wrap-right"><video class="reviews-images reviews-videos" data-original_src="%s" src="%s" width="%s" height="%s" controls %s>%s</video></div>',
+							esc_attr( $data_original_src ),
+							esc_url( $src ),
+							esc_attr( $img_width ), esc_attr( $img_height ),esc_attr( 'autoplay muted' ), esc_attr( $image_alt )
+						);
+					} else {
+						printf('<div class="reviews-images-wrap-right"><img class="reviews-images" data-original_src="%s" src="%s" alt="%s" loading="lazy"  width="%s" height="%s"></div>',
+							esc_attr( $data_original_src ),esc_url( apply_filters( 'woocommerce_photo_reviews_masonry_thumbnail_main', $src, $first_ele ) ),
+							esc_attr( $image_alt ),esc_attr( $img_width ),esc_attr( $img_height ));
+					}
+
 				}else{
 					printf('<div class="reviews-images-wrap-right"><img class="reviews-images" loading="lazy" src="%s" alt="%s"></div>',
 						esc_url( $first_ele ),esc_attr( $product_title ) );

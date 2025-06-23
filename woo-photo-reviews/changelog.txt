@@ -1,3 +1,8 @@
+/**1.2.19 - 2025.06.23**/
+– Updated: Compatible with WP 6.8.1 and WC 9.9.4
+– Updated: Update support class
+- Updated: Support for displaying videos uploaded from the Pro version.
+
 /**1.2.18 - 2025.04.11**/
 – Updated: Compatible with WP 6.8 and WC 9.8.1
 – Updated: Update support class

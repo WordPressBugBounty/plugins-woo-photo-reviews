@@ -597,3 +597,10 @@ span.wcpr-comment-child-author-name {
     font-style: italic;
     font-size: .8em;
 }
+.reviews-videos {
+    height: auto !important;
+}
+
+.reviews-videos.reviews-videos-youtube {
+    min-height: 180px;
+}

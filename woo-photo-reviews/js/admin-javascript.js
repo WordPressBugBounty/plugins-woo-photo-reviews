@@ -85,7 +85,7 @@ jQuery(document).ready(function ($) {
             data: function (params) {
                 return {
                     keyword: params.term,
-                    nonce : $('#wcpr_nonce_field').val()
+                    nonce: $('#wcpr_nonce_field').val()
                 };
             },
             processResults: function (data) {
@@ -112,7 +112,7 @@ jQuery(document).ready(function ($) {
             data: function (params) {
                 return {
                     keyword: params.term,
-                    nonce : $('#wcpr_nonce_field').val()
+                    nonce: $('#wcpr_nonce_field').val()
                 };
             },
             processResults: function (data) {
@@ -138,7 +138,7 @@ jQuery(document).ready(function ($) {
             data: function (params) {
                 return {
                     keyword: params.term,
-                    nonce : $('#wcpr_nonce_field').val()
+                    nonce: $('#wcpr_nonce_field').val()
                 };
             },
             processResults: function (data) {
@@ -180,18 +180,18 @@ jQuery(document).ready(function ($) {
         event.stopPropagation();
     });
 
-    $('input[name="reviews_display"]').on('change', function () {
-        let t= $(this),
+    $(document).on('change', '[name=reviews_display]', function () {
+        let t = $(this),
             t_val = t.val(),
-        t_closest = t.closest('.wcpr-option-frontend-style'),
-        t_label = t_closest.find('label');
+            t_closest = t.closest('.wcpr-option-frontend-style'),
+            t_label = t_closest.find('label');
         $('.wcpr-option-frontend-style').find('label').removeClass('wcpr-option-active');
         t_label.addClass('wcpr-option-active');
 
-        if(t_val === '1'){
+        if (t_val === '1') {
             $('.masonry-options').show();
             $('.default-options').hide();
-        }else if(t_val === '2'){
+        } else if (t_val === '2') {
             $('.masonry-options').hide();
             $('.default-options').show();
         }
@@ -202,22 +202,22 @@ jQuery(document).ready(function ($) {
         $('.preview-emails-html-container').addClass('preview-html-hidden');
     });
     $('.coupon-preview-emails-button').on('click', function () {
-        let old_preview_text=$(this).html();
+        let old_preview_text = $(this).html();
         $(this).html(woo_photo_reviews_params_admin.text_please_wait);
-        let language=$(this).data()['wcpr_language'];
+        let language = $(this).data()['wcpr_language'];
         $.ajax({
             url: woo_photo_reviews_params_admin.url,
             type: 'GET',
             dataType: 'JSON',
             data: {
                 action: 'wcpr_preview_emails',
-                nonce : $('#wcpr_nonce_field').val(),
+                nonce: $('#wcpr_nonce_field').val(),
                 email_type: 'coupon',
-                heading: $('#heading'+language).val(),
-                content: tinyMCE.get('content'+language) ? tinyMCE.get('content'+language).getContent() : $('#content'+language).val(),
+                heading: $('#heading' + language).val(),
+                content: tinyMCE.get('content' + language) ? tinyMCE.get('content' + language).getContent() : $('#content' + language).val(),
             },
             success: function (response) {
-                $('.coupon-preview-emails-button[data-wcpr_language="'+language+'"]').html(old_preview_text);
+                $('.coupon-preview-emails-button[data-wcpr_language="' + language + '"]').html(old_preview_text);
                 if (response) {
                     $('.preview-emails-html').html(response.html);
                     $('.preview-emails-html-container').removeClass('preview-html-hidden');
@@ -229,25 +229,25 @@ jQuery(document).ready(function ($) {
         })
     });
     $('.reminder-preview-emails-button').on('click', function () {
-        let old_preview_text=$(this).html();
+        let old_preview_text = $(this).html();
         $(this).html(woo_photo_reviews_params_admin.text_please_wait);
-        let language=$(this).data()['wcpr_language'];
+        let language = $(this).data()['wcpr_language'];
         $.ajax({
             url: woo_photo_reviews_params_admin.url,
             type: 'GET',
             dataType: 'JSON',
             data: {
                 action: 'wcpr_preview_emails',
-                nonce : $('#wcpr_nonce_field').val(),
+                nonce: $('#wcpr_nonce_field').val(),
                 email_type: 'reminder',
                 anchor: $('#wcpr-reviews-anchor-link').val(),
-                heading: $('#follow_up_email_heading'+language).val(),
+                heading: $('#follow_up_email_heading' + language).val(),
                 review_button_bg_color: $('#button-review-now-bg-color').val(),
                 review_button_color: $('#button-review-now-color').val(),
-                content: tinyMCE.get('follow_up_email_content'+language) ? tinyMCE.get('follow_up_email_content'+language).getContent() : $('#follow_up_email_content'+language).val(),
+                content: tinyMCE.get('follow_up_email_content' + language) ? tinyMCE.get('follow_up_email_content' + language).getContent() : $('#follow_up_email_content' + language).val(),
             },
             success: function (response) {
-                $('.reminder-preview-emails-button[data-wcpr_language="'+language+'"]').html(old_preview_text);
+                $('.reminder-preview-emails-button[data-wcpr_language="' + language + '"]').html(old_preview_text);
                 if (response) {
                     $('.preview-emails-html').html(response.html);
                     $('.preview-emails-html-container').removeClass('preview-html-hidden');

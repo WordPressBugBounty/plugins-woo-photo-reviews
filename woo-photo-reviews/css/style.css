@@ -341,3 +341,10 @@ li.wcpr-filter-button-li a {
     display: inline-grid;
     white-space: break-spaces !important;
 }
+.reviews-videos {
+    height: auto;
+}
+
+.reviews-images {
+    height: auto;
+}
