@@ -6,8 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 	protected static $settings, $frontend;
-	protected $is_mobile;
-	protected $anchor_link, $frontend_style, $quick_view;
+	protected                   $is_mobile;
+	protected                   $anchor_link, $frontend_style, $quick_view;
+
 	public function __construct() {
 		self::$settings = new VI_WOO_PHOTO_REVIEWS_DATA();
 		self::$frontend = 'VI_WOO_PHOTO_REVIEWS_Frontend_Frontend';
@@ -35,22 +36,28 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 		add_action( 'viwcpr_get_template_masonry_html', array( $this, 'viwcpr_get_template_masonry_html' ), 10, 1 );
 		add_action( 'viwcpr_get_template_basic_html', array( $this, 'viwcpr_get_template_basic_html' ), 10, 1 );
 	}
-	public function wc_reviews($comment){
+
+	public function wc_reviews( $comment ) {
 		if ( ! is_product() ) {
 			return;
 		}
 		global $product;
+		$is_product = apply_filters( 'viwcpr_is_single_product', true, $product );
+		if ( ! $is_product ) {
+			return;
+		}
 		if ( ! $product || $comment->comment_parent ) {
 			return;
 		}
 		do_action( 'viwcpr_get_template_basic_html', array(
-			'settings'       => self::$settings,
-			'comment'        => $comment,
-			'product'        => $product
+			'settings' => self::$settings,
+			'comment'  => $comment,
+			'product'  => $product
 		) );
 	}
-	public function photo_reviews($r){
-		if (  ! is_product() ) {
+
+	public function photo_reviews( $r ) {
+		if ( ! is_product() ) {
 			return $r;
 		}
 		if ( 'no' === get_option( 'woocommerce_enable_reviews' ) ) {
@@ -59,21 +66,23 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 		global $wp_query;
 		$my_comments = $wp_query->comments;
 		do_action( 'viwcpr_get_template_masonry_html', array(
-			'settings'          => self::$settings,
-			'my_comments'       => $my_comments,
-			'cols'              => self::$settings->get_params( 'photo', 'col_num' ),
+			'settings'    => self::$settings,
+			'my_comments' => $my_comments,
+			'cols'        => self::$settings->get_params( 'photo', 'col_num' ),
 		) );
 		$r['echo'] = false;
+
 		return $r;
 	}
-	public function overall_rating_and_filter_html(){
+
+	public function overall_rating_and_filter_html() {
 		if ( ! is_product() || ! is_single() ) {
 			return;
 		}
 		global $wp_query;
-		$post_id       =  $wp_query->post->ID;
+		$post_id       = $wp_query->post->ID;
 		$product       = function_exists( 'wc_get_product' ) ? wc_get_product( $post_id ) : new WC_Product( $post_id );
-		$product_link  = wc_clean($_SERVER['REQUEST_URI']);
+		$product_link  = wc_clean( $_SERVER['REQUEST_URI'] );
 		$product_link1 = $product->get_permalink();
 		$product_link  = remove_query_arg( array( 'image', 'verified', 'rating' ), $product_link );
 		$product_link1 = remove_query_arg( array( 'image', 'verified', 'rating' ), $product_link1 );
@@ -90,7 +99,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 			'product_id'            => $post_id,
 			'average_rating'        => $product->get_average_rating(),
 			'count_reviews'         => $counts_review,
-			'star_counts'         => array(),
+			'star_counts'           => array(),
 			'overall_rating_enable' => self::$settings->get_params( 'photo', 'overall_rating' ),
 			'rating_count_enable'   => self::$settings->get_params( 'photo', 'rating_count' )
 		) );
@@ -123,10 +132,10 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 			);
 			$count_verified = get_comments( $agrs2 );
 			remove_action( 'parse_comment_query', array( self::$frontend, 'parse_comment_query1' ) );
-			$counts_review = get_comments( $agrs );
-			$query_image    = isset( $_GET['image'] ) ? sanitize_text_field($_GET['image']) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$query_verified = isset( $_GET['verified'] ) ? sanitize_text_field($_GET['verified']) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$query_rating   = isset( $_GET['rating'] ) ? sanitize_text_field($_GET['rating']) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$counts_review  = get_comments( $agrs );
+			$query_image    = isset( $_GET['image'] ) ? sanitize_text_field( $_GET['image'] ) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$query_verified = isset( $_GET['verified'] ) ? sanitize_text_field( $_GET['verified'] ) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$query_rating   = isset( $_GET['rating'] ) ? sanitize_text_field( $_GET['rating'] ) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( $query_image ) {
 				$product_link  = add_query_arg( array( 'image' => true ), $product_link );
 				$product_link1 = add_query_arg( array( 'image' => true ), $product_link1 );
@@ -155,7 +164,8 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 			add_action( 'parse_comment_query', array( self::$frontend, 'parse_comment_query1' ) );
 		}
 	}
-	public function quick_view(){
+
+	public function quick_view() {
 		if ( ! is_product() || ! is_single() ) {
 			return;
 		}
@@ -167,13 +177,14 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 			'woocommerce-photo-reviews' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR,
 			WOO_PHOTO_REVIEWS_TEMPLATES );
 	}
+
 	public function frontend_enqueue() {
 		if ( ! is_product() || ! is_single() ) {
 			return;
 		}
 		$suffix = WP_DEBUG ? '' : 'min.';
-		wp_enqueue_style( 'woocommerce-photo-reviews-style', VI_WOO_PHOTO_REVIEWS_CSS . 'style.'.$suffix.'css', array(), VI_WOO_PHOTO_REVIEWS_VERSION );
-		wp_enqueue_script( 'woocommerce-photo-reviews-script', VI_WOO_PHOTO_REVIEWS_JS . 'script.'.$suffix.'js', array( 'jquery' ), VI_WOO_PHOTO_REVIEWS_VERSION, false );
+		wp_enqueue_style( 'woocommerce-photo-reviews-style', VI_WOO_PHOTO_REVIEWS_CSS . 'style.' . $suffix . 'css', array(), VI_WOO_PHOTO_REVIEWS_VERSION );
+		wp_enqueue_script( 'woocommerce-photo-reviews-script', VI_WOO_PHOTO_REVIEWS_JS . 'script.' . $suffix . 'js', array( 'jquery' ), VI_WOO_PHOTO_REVIEWS_VERSION, false );
 		wp_localize_script( 'woocommerce-photo-reviews-script', 'woocommerce_photo_reviews_params', array(
 				'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
 				'i18n_required_rating_text'  => esc_attr__( 'Please select a rating', 'woo-photo-reviews' ),
@@ -181,10 +192,10 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 				'i18n_required_name_text'    => esc_attr__( 'Please enter your name', 'woo-photo-reviews' ),
 				'i18n_required_email_text'   => esc_attr__( 'Please enter your email', 'woo-photo-reviews' ),
 				'warning_gdpr'               => esc_html__( 'Please agree with our term and policy.', 'woo-photo-reviews' ),
-				'upload_allow'                  => self::$settings->get_params( 'upload_allow' ),
-				'ajax_upload_file'                  => self::$settings->get_params( 'ajax_upload_file' ),
-				'ajax_check_content_reviews'                  => self::$settings->get_params( 'ajax_check_content_reviews' ),
-				'max_file_size'                  => self::$settings->get_params( 'photo', 'maxsize' ),
+				'upload_allow'               => self::$settings->get_params( 'upload_allow' ),
+				'ajax_upload_file'           => self::$settings->get_params( 'ajax_upload_file' ),
+				'ajax_check_content_reviews' => self::$settings->get_params( 'ajax_check_content_reviews' ),
+				'max_file_size'              => self::$settings->get_params( 'photo', 'maxsize' ),
 				'max_files'                  => self::$settings->get_params( 'photo', 'maxfiles' ),
 				'enable_photo'               => self::$settings->get_params( 'photo', 'enable' ),
 				'required_image'             => self::$settings->get_params( 'photo', 'required' ),
@@ -192,24 +203,24 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 				/* translators: %s: max file count */
 				'warning_max_files'          => sprintf( _n( 'You can only upload maximum of %s file', 'You can only upload maximum of %s files', self::$settings->get_params( 'photo', 'maxfiles' ), 'woo-photo-reviews' ), self::$settings->get_params( 'photo', 'maxfiles' ) ),
 				/* translators: %s: file name */
-				'warning_upload_allow'          => sprintf( esc_html__( '\'%s\' is not an allowed file type.', 'woo-photo-reviews' ),'%file_name%'),
+				'warning_upload_allow'       => sprintf( esc_html__( '\'%s\' is not an allowed file type.', 'woo-photo-reviews' ), '%file_name%' ),
 				/* translators: %s: file name, %s: max file size */
-				'warning_max_file_size'          => sprintf( esc_html__( 'The size of \'%s\' is greater than %s kB.',  'woo-photo-reviews' ),'%file_name%', self::$settings->get_params( 'photo', 'maxsize' ) ),// phpcs:ignore WordPress.WP.I18n.UnorderedPlaceholdersText, WordPress.WP.I18n.MissingTranslatorsComment
+				'warning_max_file_size'      => sprintf( esc_html__( 'The size of \'%s\' is greater than %s kB.', 'woo-photo-reviews' ), '%file_name%', self::$settings->get_params( 'photo', 'maxsize' ) ),// phpcs:ignore WordPress.WP.I18n.UnorderedPlaceholdersText, WordPress.WP.I18n.MissingTranslatorsComment
 				'comments_container_id'      => apply_filters( 'woocommerce_photo_reviews_comments_wrap', 'comments' ),
 				'nonce'                      => wp_create_nonce( 'woocommerce_photo_reviews_nonce' ),
 				'wc_ajax_url'                => WC_AJAX::get_endpoint( '%%endpoint%%' ),
 			)
 		);
-		if ($this->frontend_style==1){
-			wp_enqueue_style( 'wcpr-masonry-style', VI_WOO_PHOTO_REVIEWS_CSS . 'masonry.'.$suffix.'css', array(), VI_WOO_PHOTO_REVIEWS_VERSION );
+		if ( $this->frontend_style == 1 ) {
+			wp_enqueue_style( 'wcpr-masonry-style', VI_WOO_PHOTO_REVIEWS_CSS . 'masonry.' . $suffix . 'css', array(), VI_WOO_PHOTO_REVIEWS_VERSION );
 			wp_enqueue_script( 'wcpr-swipebox-js', VI_WOO_PHOTO_REVIEWS_JS . 'jquery.swipebox.js', array( 'jquery' ), VI_WOO_PHOTO_REVIEWS_VERSION, false );
-			wp_enqueue_style( 'wcpr-swipebox-css', VI_WOO_PHOTO_REVIEWS_CSS . 'swipebox.'.$suffix.'css', [], VI_WOO_PHOTO_REVIEWS_VERSION );
-			wp_enqueue_script( 'wcpr-masonry-script', VI_WOO_PHOTO_REVIEWS_JS . 'masonry.'.$suffix.'js', array( 'jquery' ), VI_WOO_PHOTO_REVIEWS_VERSION, false );
+			wp_enqueue_style( 'wcpr-swipebox-css', VI_WOO_PHOTO_REVIEWS_CSS . 'swipebox.' . $suffix . 'css', [], VI_WOO_PHOTO_REVIEWS_VERSION );
+			wp_enqueue_script( 'wcpr-masonry-script', VI_WOO_PHOTO_REVIEWS_JS . 'masonry.' . $suffix . 'js', array( 'jquery' ), VI_WOO_PHOTO_REVIEWS_VERSION, false );
 			add_action( 'wp_footer', array( $this, 'quick_view' ) );
-		}else{
+		} else {
 			wp_enqueue_style( 'wcpr-rotate-font-style', VI_WOO_PHOTO_REVIEWS_CSS . 'rotate.min.css', array(), VI_WOO_PHOTO_REVIEWS_VERSION );
-			wp_enqueue_style( 'wcpr-default-display-style', VI_WOO_PHOTO_REVIEWS_CSS . 'default-display-images.'.$suffix.'css', array(), VI_WOO_PHOTO_REVIEWS_VERSION );
-			wp_enqueue_script( 'wcpr-default-display-script', VI_WOO_PHOTO_REVIEWS_JS . 'default-display-images.'.$suffix.'js', array( 'jquery' ), VI_WOO_PHOTO_REVIEWS_VERSION, false );
+			wp_enqueue_style( 'wcpr-default-display-style', VI_WOO_PHOTO_REVIEWS_CSS . 'default-display-images.' . $suffix . 'css', array(), VI_WOO_PHOTO_REVIEWS_VERSION );
+			wp_enqueue_script( 'wcpr-default-display-script', VI_WOO_PHOTO_REVIEWS_JS . 'default-display-images.' . $suffix . 'js', array( 'jquery' ), VI_WOO_PHOTO_REVIEWS_VERSION, false );
 			$css_default = ".reviews-images-item{margin-right: 2px;padding: 0;float:left;border-radius: 3px;}.kt-reviews-image-container .kt-wc-reviews-images-wrap-wrap .reviews-images-item .review-images{float: left !important;height: 48px !important;width:auto !important;border-radius: 3px;}";
 			wp_add_inline_style( 'wcpr-default-display-style', $css_default );
 		}
@@ -257,6 +268,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 			'woocommerce-photo-reviews' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR,
 			WOO_PHOTO_REVIEWS_TEMPLATES );
 	}
+
 	public function viwcpr_get_template_masonry_html( $arg ) {
 		if ( empty( $arg ) ) {
 			return;
@@ -265,6 +277,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 			'woocommerce-photo-reviews' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR,
 			WOO_PHOTO_REVIEWS_TEMPLATES );
 	}
+
 	public function viwcpr_get_filters_html( $arg ) {
 		if ( empty( $arg ) ) {
 			return;
@@ -273,6 +286,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 			'woocommerce-photo-reviews' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR,
 			WOO_PHOTO_REVIEWS_TEMPLATES );
 	}
+
 	public function viwcpr_get_overall_rating_html( $arg ) {
 		if ( empty( $arg ) ) {
 			return;
