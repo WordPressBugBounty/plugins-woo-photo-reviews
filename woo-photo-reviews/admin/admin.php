@@ -418,7 +418,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                     <li><?php echo wp_kses_post( __( 'To change Emails design, go to <a target="_blank" href="' . admin_url( "admin.php" ) . '?page=wc-settings&tab=email#woocommerce_email_base_color">WooCommerce Emails Settings</a>.', 'woocommerce-photo-reviews' ) ) ?></li>
                 </ul>
             </div>
-            <form action="" method="POST" class="vi-ui form">
+            <form action="" method="POST" class="vi-ui small form">
 				<?php wp_nonce_field( 'wcpr_settings_page_save', 'wcpr_nonce_field' ); ?>
                 <div class="vi-ui top tabular menu">
                     <div class="item active" data-tab="general"><?php esc_html_e( 'General', 'woo-photo-reviews' ); ?></div>
@@ -460,7 +460,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="wcpr_multi_language"><?php esc_html_e( 'Enable Multilingual', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -472,25 +472,36 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                     <table class="form-table">
                         <tr>
                             <th>
-                                <label for="photo_reviews_options"><?php esc_html_e( 'Include photos', 'woo-photo-reviews' ) ?></label>
+                                <label for="photo_reviews_options"><?php esc_html_e( 'Include files', 'woo-photo-reviews' ) ?></label>
                             </th>
-
                             <td>
-                                <div class="vi-ui toggle checkbox">
-                                    <input type="checkbox" id="photo_reviews_options"
-                                           name="photo_reviews_options" <?php checked( $this->settings->get_params( 'photo', 'enable' ), 'on' ) ?>><label
-                                            for="photo_reviews_options"><?php esc_html_e( 'Allow customers to attach photos in their review.', 'woo-photo-reviews' ) ?></label>
-                                </div>
+                                <?php
+                                $photo_reviews_options = $this->settings->get_params( 'photo', 'enable' );
+                                ?>
+                                <select name="photo_reviews_options" id="photo_reviews_options" class="vi-ui dropdown fluid">
+                                    <option value="off" <?php selected($photo_reviews_options,'off') ?>><?php esc_html_e( 'None', 'woo-photo-reviews' ) ?></option>
+                                    <option value="on" <?php selected($photo_reviews_options,'on') ?>><?php esc_html_e( 'Photo', 'woo-photo-reviews' ) ?></option>
+                                    <option disabled><?php esc_html_e( 'Photo & Video - premium version only', 'woo-photo-reviews' ) ?></option>
+                                </select>
+                                <p class="description">
+                                    <?php esc_html_e('Allow customers to attach photos and videos to their reviews.','woo-photo-reviews'); ?>
+                                </p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label for="photo_reviews_options"><?php esc_html_e( 'Include videos', 'woo-photo-reviews' ) ?></label>
+                                <label for="photo_required"><?php esc_html_e( 'Photo required', 'woo-photo-reviews' ) ?></label>
                             </th>
-
                             <td>
-                                <a class="vi-ui button" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <div class="vi-ui toggle checkbox">
+                                    <input class="kt-photo-reviews-setting" type="checkbox" id="photo_required"
+                                           name="photo_reviews_required"
+                                           value="on" <?php if ( 'on' == $this->settings->get_params( 'photo', 'required' ) ) {
+                                        echo esc_attr( 'checked' );
+                                    }
+                                    ?>>
+                                    <label for="photo_required"><?php esc_html_e( 'Reviews must include photo to be uploaded.', 'woo-photo-reviews' ) ?></label>
+                                </div>
                             </td>
                         </tr>
 						<?php
@@ -501,32 +512,40 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="image_maxsize"><?php esc_html_e( 'Maximum photo size', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <div class="inline field">
+                                <div class="vi-ui right labeled input">
                                     <input id="image_maxsize" class="kt-photo-reviews-setting" type="number"
                                            name="image_maxsize" min="0"
                                            max="<?php echo esc_attr( $upload_max_filesize ); ?>"
                                            step="1"
                                            value="<?php /* translators: %s: _max upload file size */
-									       echo esc_attr( $this->settings->get_params( 'photo', 'maxsize' ) ); ?>"><?php printf( esc_html__( 'KB (Max %s KB).', 'woo-photo-reviews' ), esc_html( $upload_max_filesize ) ); ?>
+                                           echo esc_attr( $this->settings->get_params( 'photo', 'maxsize' ) ); ?>">
+                                    <label class="vi-ui label">
+                                        <?php printf( esc_html__( 'KB (Max %s KB).', 'woo-photo-reviews' ), esc_html( $upload_max_filesize ) ); ?>
+                                    </label>
                                 </div>
-                                <p><?php esc_html_e( 'The maximum size of a single picture can be uploaded.', 'woo-photo-reviews' ) ?></p>
-
+                                <p class="description"><?php esc_html_e( 'The maximum size of a single picture can be uploaded.', 'woo-photo-reviews' ) ?></p>
                             </td>
-
                         </tr>
                         <tr>
                             <th>
                                 <label for="max_file_uploads"><?php esc_html_e( 'Maximum photo quantity', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <div class="inline field">
-                                    <input id="max_file_uploads" type="number"
-                                           value="2" readonly>
-                                    <a class="vi-ui button" target="_blank"
+                                <div class="vi-ui right labeled input">
+                                    <input id="max_file_uploads" type="number" value="2" readonly>
+                                    <a class="vi-ui label button pro_button small" target="_blank"
                                        href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 </div>
-                                <p><?php esc_html_e( 'The maximum quantity of photos can be uploaded with a review.', 'woo-photo-reviews' ) ?></p>
-
+                                <p class="description"><?php esc_html_e( 'The maximum quantity of photos can be uploaded with a review.', 'woo-photo-reviews' ) ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="max_file_uploads"><?php esc_html_e( 'Upload button design', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -557,59 +576,80 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                         </tr>
                         <tr>
                             <th>
-                                <label for="photo_required"><?php esc_html_e( 'Photo required', 'woo-photo-reviews' ) ?></label>
+                                <label><?php esc_html_e( 'Allow empty comment', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <div class="vi-ui toggle checkbox">
-                                    <input class="kt-photo-reviews-setting" type="checkbox" id="photo_required"
-                                           name="photo_reviews_required"
-                                           value="on" <?php if ( 'on' == $this->settings->get_params( 'photo', 'required' ) ) {
-										echo esc_attr( 'checked' );
-									}
-									?>>
-                                    <label for="photo_required"><?php esc_html_e( 'Reviews must include photo to be uploaded.', 'woo-photo-reviews' ) ?></label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><?php esc_html_e( 'Sort reviews by', 'woo-photo-reviews' ) ?></th>
-                            <td>
-                                <div class="grouped fields">
-
-
-                                    <div class="field">
-                                        <div class="vi-ui toggle checkbox">
-                                            <input class="kt-photo-reviews-setting" type="radio"
-                                                   name="reviews_sort_time" value="1"
-                                                   id="reviews_sort_time_new" <?php if ( 1 == $this->settings->get_params( 'photo', 'sort' )['time'] ) {
-												echo esc_attr( 'checked' );
-											}
-											?>><label
-                                                    for="reviews_sort_time_new"><?php esc_html_e( ' Newest first', 'woo-photo-reviews' ) ?></label>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="vi-ui toggle checkbox">
-                                            <input class="kt-photo-reviews-setting" type="radio"
-                                                   name="reviews_sort_time" value="2"
-                                                   id="reviews_sort_time_old" <?php if ( 2 == $this->settings->get_params( 'photo', 'sort' )['time'] ) {
-												echo esc_attr( 'checked' );
-											}
-											?>><label
-                                                    for="reviews_sort_time_old"><?php esc_html_e( ' Oldest first', 'woo-photo-reviews' ) ?></label>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Allow customers to post reviews with empty content, only rating is required', 'woo-photo-reviews' ) ?>
+                                </p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label for="review_tab_first"><?php esc_html_e( 'Show review tab first', 'woo-photo-reviews' ) ?></label>
+                                <label><?php esc_html_e( 'Minimum comment length', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Require review characters not less than a certain. Leave blank to not set minimum.', 'woo-photo-reviews' ) ?>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Enable review title', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Thank you message', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Show this message after a customer leaves a review', 'woo-photo-reviews' ) ?>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Thank you message if Coupon', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Show this message after a customer leaves a review and receives a coupon', 'woo-photo-reviews' ) ?>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Restrict number of reviews', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Reviews orders', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Allow your customer submit reviews for purchased products per order at one time', 'woo-photo-reviews' ) ?>
+                                </p>
                             </td>
                         </tr>
                         <tr>
@@ -639,6 +679,52 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </td>
                         </tr>
                         <tr>
+                            <th><?php esc_html_e( 'Sort reviews by', 'woo-photo-reviews' ) ?></th>
+                            <td>
+                                <div class="equal width fields">
+
+                                    <div class="field">
+                                        <div class="vi-ui toggle checkbox">
+                                            <input class="kt-photo-reviews-setting" type="radio"
+                                                   name="reviews_sort_time" value="1"
+                                                   id="reviews_sort_time_new" <?php if ( 1 == $this->settings->get_params( 'photo', 'sort' )['time'] ) {
+                                                echo esc_attr( 'checked' );
+                                            }
+                                            ?>><label
+                                                    for="reviews_sort_time_new"><?php esc_html_e( ' Newest first', 'woo-photo-reviews' ) ?></label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="vi-ui toggle checkbox">
+                                            <input class="kt-photo-reviews-setting" type="radio"
+                                                   name="reviews_sort_time" value="2"
+                                                   id="reviews_sort_time_old" <?php if ( 2 == $this->settings->get_params( 'photo', 'sort' )['time'] ) {
+                                                echo esc_attr( 'checked' );
+                                            }
+                                            ?>><label
+                                                    for="reviews_sort_time_old"><?php esc_html_e( ' Oldest first', 'woo-photo-reviews' ) ?></label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <a class="vi-ui button pro_button small" target="_blank"
+                                           href="https://1.envato.market/L3WrM">
+                                            <?php esc_html_e( 'Vote up high to low - premium varsion only', 'woo-photo-reviews' ) ?>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Show review tab first', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                            </td>
+                        </tr>
+                        <tr>
                             <th>
                                 <label for="masonry_star_color"><?php esc_html_e( 'Rating stars color', 'woo-photo-reviews' ); ?></label>
                             </th>
@@ -654,7 +740,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="wcpr_hide_name"><?php esc_html_e( 'Hide name', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -663,8 +749,32 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="verified-type"><?php esc_html_e( 'Verified owner badge', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Show image caption', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Let your customer add caption for their review images and show it in reviews', 'woo-photo-reviews' ) ?>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Helpful buttons', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Show up-vote/down-vote buttons in customer reviews', 'woo-photo-reviews' ) ?>
+                                </p>
                             </td>
                         </tr>
                         <tr>
@@ -737,7 +847,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="single_product_summary"><?php esc_html_e( 'Display product summary on masonry popup', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -746,7 +856,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="masonry_col_num"><?php esc_html_e( 'Number of columns', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -755,7 +865,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="masonry_grid_bg"><?php esc_html_e( 'Grid background color', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -764,7 +874,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="masonry_grid_item_bg"><?php esc_html_e( 'Grid item background color', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -773,7 +883,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="masonry_comment_text_color"><?php esc_html_e( 'Review text color', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -782,7 +892,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="wcpr-pagination-ajax"><?php esc_html_e( 'Ajax pagination', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -791,7 +901,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="wcpr-reviews-container"><?php esc_html_e( 'Reviews container', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -837,6 +947,18 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                         </tr>
                         <tr>
                             <th>
+                                <label><?php esc_html_e( 'Hide if empty', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Do not show Rating count & Overall rating if a product does not have any reviews', 'woo-photo-reviews' ) ?>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 <label for="overall_rating"><?php esc_html_e( 'Overall rating', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
@@ -875,6 +997,18 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 									} ?>>
                                     <label></label>
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label><?php esc_html_e( 'Hide if empty', 'woo-photo-reviews' ) ?></label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button pro_button small" target="_blank"
+                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                <p class="description">
+                                    <?php esc_html_e( 'Do not show Filter if a product does not have any reviews', 'woo-photo-reviews' ) ?>
+                                </p>
                             </td>
                         </tr>
 
@@ -959,7 +1093,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="kt_coupons_if_register"><?php esc_html_e( 'Registered-account email is required', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <label for="kt_coupons_if_register"><?php esc_html_e( 'Only send coupons if author\'s email is registered an account', 'woo-photo-reviews' ) ?></label>
                             </td>
@@ -1017,7 +1151,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="kt_products_gen_coupon"><?php esc_html_e( 'Required products', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
 								<?php esc_html_e( 'Only reviews on selected products can receive coupons. Leave blank to apply for all products', 'woo-photo-reviews' ) ?>
                             </td>
@@ -1027,7 +1161,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="kt_excluded_products_gen_coupon"><?php esc_html_e( 'Exclude products to give coupon', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
 								<?php esc_html_e( 'Reviews on these products will not receive coupon', 'woo-photo-reviews' ) ?>
                             </td>
@@ -1038,7 +1172,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 </select><?php esc_html_e( 'Only reviews on products in these categories can receive coupon', 'woo-photo-reviews' ) ?>
                             </td>
@@ -1049,7 +1183,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 </select><?php esc_html_e( 'Reviews on products in these categories will not receive coupon', 'woo-photo-reviews' ) ?>
                             </td>
@@ -1396,7 +1530,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="kt_coupon_code_prefix"><?php esc_html_e( 'Coupon Code Prefix', 'woo-photo-reviews' ) ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -1426,7 +1560,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
 								<?php esc_html_e( 'These products will not appear in review reminder email.', 'woo-photo-reviews' ) ?>
                             </td>
@@ -1437,7 +1571,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
 								<?php esc_html_e( 'Products in these categories will not appear in review reminder email.', 'woo-photo-reviews' ) ?>
                             </td>
@@ -1449,7 +1583,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 
                             <td>
 
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <label for="exclude_non_coupon_products"><?php esc_html_e( 'Enable this if you mean to offer coupon for reviews in review reminder.', 'woo-photo-reviews' ) ?></label>
 
@@ -1543,7 +1677,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="button-review-now-color"><?php esc_html_e( 'Button "Review now" text color', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -1552,7 +1686,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <label for="button-review-now-bg-color"><?php esc_html_e( 'Button "Review now" background color', 'woo-photo-reviews' ); ?></label>
                             </th>
                             <td>
-                                <a class="vi-ui button" target="_blank"
+                                <a class="vi-ui button pro_button small" target="_blank"
                                    href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
@@ -1561,7 +1695,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 
 
                 </div>
-                <p><input type="submit" class="vi-ui primary button" name="submit" value="<?php esc_html_e( 'Save', 'woo-photo-reviews' ) ?>"></p>
+                <p class="wcpr-button-save-settings-container"><input type="submit" class="vi-ui primary button" name="submit" value="<?php esc_html_e( 'Save', 'woo-photo-reviews' ) ?>"></p>
             </form>
         </div>
 		<?php

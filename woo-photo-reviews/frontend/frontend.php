@@ -1114,7 +1114,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
         $upload_allow = $this->settings->get_params('upload_allow');
         foreach ($types as $type) {
             if (!in_array($type, $upload_allow)) {
-                $error = esc_html__('Only JPG, JPEG, BMP, PNG , WEBP, GIF, MP4 and WEBM are allowed.', 'woo-photo-reviews');
+                $error = esc_html__('Only JPG, JPEG, BMP, PNG , WEBP, GIF are allowed.', 'woo-photo-reviews');
                 break;
             }
         }

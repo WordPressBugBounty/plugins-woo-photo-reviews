@@ -3,22 +3,22 @@
  * Plugin Name: Photo Reviews for WooCommerce
  * Plugin URI: https://villatheme.com/extensions/woocommerce-photo-reviews/
  * Description: Allow you to automatically send email to your customers to request reviews. Customers can include photos in their reviews.
- * Version: 1.2.21
+ * Version: 1.2.24
  * Author: VillaTheme
  * Author URI: http://villatheme.com
  * Text Domain: woo-photo-reviews
  * Domain Path: /languages
- * Copyright 2018-2025 VillaTheme.com. All rights reserved.
+ * Copyright 2018-2026 VillaTheme.com. All rights reserved.
  * Requires Plugins: woocommerce
  * Requires at least: 5.0
- * Tested up to: 6.8.2
+ * Tested up to: 6.9
  * WC requires at least: 7.0
- * WC tested up to: 10.0.4
+ * WC tested up to: 10.4
  */
 if (!defined('ABSPATH')) {
     exit;
 }
-define('VI_WOO_PHOTO_REVIEWS_VERSION', '1.2.21');
+define('VI_WOO_PHOTO_REVIEWS_VERSION', '1.2.24');
 
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 define('WOO_PHOTO_REVIEWS_DIR', plugin_dir_path(__FILE__));

@@ -45,19 +45,40 @@ jQuery(document).ready(function ($) {
         }
         $('#reviews-content-left-modal').html('');
         $('#reviews-content-left-main').html('');
-        if ($('.wcpr-grid').find('.wcpr-grid-item').eq(current).find('.reviews-images-container').length == 0) {
+        let $left_modal = $('#reviews-content-left-modal');
+        let $left_main = $('#reviews-content-left-main')
+        let $wrap_current = $('.wcpr-grid').find('.wcpr-grid-item').eq(current);
+        if ($wrap_current.find('.reviews-images-container').length == 0) {
             $('#reviews-content-left').addClass('wcpr-no-images');
         } else {
-            $('#reviews-content-left-modal').html(($('.wcpr-grid').find('.wcpr-grid-item').eq(current).find('.reviews-images-wrap-left').html()));
-            let img_data = $('.wcpr-grid').find('.wcpr-grid-item').eq(current).find('.reviews-images-wrap-right').html();
+            if ($wrap_current.find('.reviews-images-wrap-left .reviews-images').length > 1){
+                $left_modal.html($wrap_current.find('.reviews-images-wrap-left').html());
+            }
+            let img_data = $wrap_current.find('.reviews-images-wrap-right').eq(0).html(), img_url;
+            if (typeof img_data === 'undefined') {
+                img_data = $wrap_current.find('.reviews-images-wrap:first-child > a').html();
+                img_url =  $wrap_current.find('.reviews-images-wrap:first-child > a').attr('href');
+            }
             if (img_data) {
                 $('#reviews-content-left').removeClass('wcpr-no-images');
-                $('#reviews-content-left-main').html(img_data);
+                $left_main.html(img_data);
+                $left_main.find('img').attr('src',img_url || $left_main.find('img').data('original_src') || $left_main.find('img').attr('src'))
+                    .css({width: 'auto', height: 'auto'});
+                $left_main.find('.reviews-videos').css({'min-height': '400px'});
+                $left_main.find('.reviews-videos.reviews-videos-youtube').css({width: '500px'});
             }
-            $('#reviews-content-left-modal').find('.reviews-images').parent().on('click', function () {
+            $left_modal.find('.reviews-images').map(function () {
+                let lazy_load_src = $(this).data('src');
+                if (lazy_load_src) {
+                    $(this).attr('src', lazy_load_src)
+                }
+            });
+            $left_modal.find('.reviews-images').closest('a').on('click', function () {
                 swipeBoxIndex = $(this).data()['image_index'];
-                $('#reviews-content-left-main').find('.reviews-images').attr('src', $(this).attr('href'));
-                $('#reviews-content-left-main').find('.wcpr-review-image-caption').html($(this).data()['image_caption']);
+                let current_image_src = $(this).attr('href');
+                let temp = jQuery(`<img class="reviews-images" data-original_src="${current_image_src}" src="${current_image_src}">`);
+                $left_main.find('source').attr('srcset', current_image_src);
+                $left_main.find('.wcpr-review-image-caption').html($(this).data('image_caption'));
                 return false;
             });
         }
@@ -104,7 +125,7 @@ jQuery(document).ready(function ($) {
     function wcpr_enable_scroll() {
         let scrollTop = parseInt($('html').css('top'));
         $('html').removeClass('wcpr-noscroll');
-        $('html,body').scrollTop(-scrollTop);
+        window.scrollTo({top: -scrollTop, behavior: 'instant'})
     }
 
     function wcpr_disable_scroll() {

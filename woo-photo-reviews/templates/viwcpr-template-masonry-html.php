@@ -42,40 +42,45 @@ foreach ( $my_comments as $v ) {
 								$data_image_src = wp_get_attachment_image_url( $img_post_id, 'full' );
 								$thumb          = wp_get_attachment_thumb_url( $img_post_id );
 								$is_video           = strpos( $image_data['mime_type'] ?? '', 'video/' ) === 0;
-                                echo '<pre class="prrreeee">'.print_r($image_data,true).'</pre>';
+//                                echo '<pre class="prrreeee">'.print_r($image_data,true).'</pre>';
 								if (strpos($data_image_src,'.gif') ){
 									$href = $data_image_src;
 								}else {
 									$href = ( isset( $image_data['sizes']['wcpr-photo-reviews'] ) ? wp_get_attachment_image_url( $img_post_id, 'wcpr-photo-reviews' ) : ( isset( $image_data['sizes']['medium_large'] ) ? wp_get_attachment_image_url( $img_post_id, 'medium_large' ) : ( isset( $image_data['sizes']['medium'] ) ? wp_get_attachment_image_url( $img_post_id, 'medium' ) : $data_image_src ) ) );
 								}
 								if ( $is_video ) {
-									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" data-image_src="%s" data-image_caption="%s" href="%s"><video class="reviews-images reviews-videos" src="%s"  >%s</video></a></div>',
+									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" data-image_src="%s" data-image_caption="%s" href="%s"><video class="reviews-images reviews-videos" data-src="%s"  >%s</video></a></div>',
 										esc_attr( $img_post_ids_k ), esc_attr( $data_image_src ), esc_attr( $data_image_caption ),
 										esc_url( apply_filters( 'woocommerce_photo_reviews_masonry_thumbnail_main', $href, $img_post_id ) ),
 										 esc_url( $href ), esc_attr( $image_alt )
 									);
 								} else {
-									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" data-image_src="%s" data-image_caption="" rel="nofollow" href="%s"><img class="reviews-images" loading="lazy" src="%s" alt="%s"/></a></div>',
+									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" data-image_src="%s" data-image_caption="" rel="nofollow" href="%s"><img class="reviews-images" loading="lazy" data-src="%s" alt="%s"/></a></div>',
 										esc_attr( $img_post_ids_k ), esc_attr( $data_image_src ), esc_url( apply_filters( 'woocommerce_photo_reviews_masonry_thumbnail_main', $href, $img_post_id ) ),
 										esc_url( $thumb ), esc_attr( $image_alt ) );
 								}
 							}else{
 								$file_type = explode( '.', $img_post_id );
 								$file_type = end( $file_type );
-								if ( ! in_array( 'image/' . strtolower( $file_type ), $settings->get_params( 'upload_allow_images' ) ) ) {
+								if ( ! in_array( 'image/' . strtolower( $file_type ), $settings->get_params( 'upload_allow' ) ) ) {
 									if ( strpos( $img_post_id, '.mp4' ) || strpos( $img_post_id, '.webm' )|| strpos( $img_post_id, '.mov' ) ) {
-										printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><video class="reviews-images reviews-videos" src="%s" >%s</video></a></div>',
+										printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><video class="reviews-images reviews-videos" data-src="%s" >%s</video></a></div>',
 											 esc_attr( $img_post_ids_k ), esc_attr( $img_post_id ),
 											 esc_url( $img_post_id ), esc_attr( $product_title )
 										);
-									} else {
-										printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><video class="reviews-images reviews-iframe" src="%s" >%s</video></a></div>',
+									} elseif ( strpos( $img_post_id, '.shopee.' ) ) {
+                                        printf( '<div class="%sreviews-images-wrap"><a data-image_index="%s" href="%s"><img class="%sreviews-images" loading="lazy" data-src="%s" alt="%s"></a></div>',
+                                                esc_attr( $prefix_class ), esc_attr( $img_post_ids_k ), esc_attr( $img_post_id ),
+                                                esc_attr( $prefix_class ), esc_url( $img_post_id ), esc_attr( $product_title )
+                                        );
+                                    } else {
+										printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><video class="reviews-images reviews-iframe" data-src="%s" >%s</video></a></div>',
 											 esc_attr( $img_post_ids_k ), esc_attr( $img_post_id ),
 											 esc_url( $img_post_id ), esc_attr( $product_title )
 										);
 									}
 								} else {
-									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><img class="reviews-images" loading="lazy" src="%s" alt="%s"></a></div>',
+									printf( '<div class="reviews-images-wrap"><a data-image_index="%s" href="%s"><img class="reviews-images" loading="lazy" data-src="%s" alt="%s"></a></div>',
 										esc_attr( $img_post_ids_k ), esc_attr( $img_post_id ),esc_url( $img_post_id ),esc_attr( $product_title )
 									);
 								}

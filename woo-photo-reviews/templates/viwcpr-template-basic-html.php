@@ -43,7 +43,7 @@ if ( get_comment_meta( $comment->comment_ID, 'reviews-images' ) ) {
 			} else {
 				$file_type = explode( '.', $image_post_id );
 				$file_type = end( $file_type );
-				if ( ! in_array( 'image/' . strtolower( $file_type ), $settings->get_params( 'upload_allow_images' ) ) ) {
+				if ( ! in_array( 'image/' . strtolower( $file_type ), $settings->get_params( 'upload_allow' ) ) ) {
 					if ( strpos( $image_post_id, '.mp4' ) || strpos( $image_post_id, '.webm' ) ) {
 						printf( '<div class="reviews-images-item" data-image_src="%s" data-index="%s"><video class="review-images review-videos" src="%s" >%s</video></div>',
 							esc_attr( $image_post_id ), esc_attr( $i ), esc_url( $image_post_id ), esc_attr( $product_title ) );

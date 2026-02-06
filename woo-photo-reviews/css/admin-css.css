@@ -11,6 +11,15 @@ th > p {
     font-weight: normal;
 }
 
+.vi-ui.button.pro_button{
+    font-weight: 300;
+}
+.wcpr-button-save-settings-container {
+    position: sticky;
+    bottom: 20px;
+    z-index: 99;
+    display: inline-block;
+}
 .kt-custom-coupon > td:first-child > p {
     font-style: italic;
     margin: 0;

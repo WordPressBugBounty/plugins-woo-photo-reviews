@@ -153,6 +153,12 @@
     -webkit-box-orient: vertical;
     text-align: justify;
 }
+@supports (-webkit-touch-callout: none) {
+    .wcpr-content .review-content-container .wcpr-review-content {
+        display: block;
+        max-height: 150px;
+    }
+}
 
 .reviews-images-wrap-left {
     display: none;
