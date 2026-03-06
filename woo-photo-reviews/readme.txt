@@ -5,7 +5,7 @@ Tags: woocommerce reviews,product reviews image, customer reviews, review remind
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-WC tested up to: 10.4
+WC tested up to: 10.5
 WC requires at least: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -392,6 +392,9 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Review on single product page
 
 == Changelog ==
+/**1.2.25 - 2026.03.06**/
+- Update: VillaThem support
+
 /**1.2.24 - 2026.01.17**/
 - Fixed: can not change the image on the pop-up
 
