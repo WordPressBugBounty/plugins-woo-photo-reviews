@@ -1,3 +1,7 @@
+/**1.2.27 - 2026.06.20**/
+- Update: VillaThem support
+– Updated: Compatible with WP 7.0 and WC 10.8.1
+
 /**1.2.26 - 2026.03.20**/
 - Updated: Compatible with WC 10.6
 
