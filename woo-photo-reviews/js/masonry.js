@@ -76,7 +76,17 @@ jQuery(document).ready(function ($) {
             $left_modal.find('.reviews-images').closest('a').on('click', function () {
                 swipeBoxIndex = $(this).data()['image_index'];
                 let current_image_src = $(this).attr('href');
-                let temp = jQuery(`<img class="reviews-images" data-original_src="${current_image_src}" src="${current_image_src}">`);
+                // let temp = jQuery(`<img class="reviews-images" data-original_src="${current_image_src}" src="${current_image_src}">`);
+                // temp.css({
+                //     width: 'auto',
+                //     height: 'auto'
+                // });
+                // $left_main.find('.reviews-images').replaceWith(temp);
+                $left_main.find('.reviews-images').attr({
+                    'srcset': current_image_src,
+                    'data-original_src': current_image_src,
+                    'src': current_image_src,
+                });
                 $left_main.find('source').attr('srcset', current_image_src);
                 $left_main.find('.wcpr-review-image-caption').html($(this).data('image_caption'));
                 return false;

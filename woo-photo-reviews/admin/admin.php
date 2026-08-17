@@ -62,7 +62,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 					'support'    => 'https://wordpress.org/support/plugin/woo-photo-reviews/',
 					'docs'       => 'http://docs.villatheme.com/?item=woocommerce-photo-reviews',
 					'review'     => 'https://wordpress.org/support/plugin/woo-photo-reviews/reviews/?rate=5#rate-response',
-					'pro_url'    => 'https://1.envato.market/L3WrM',
+					'pro_url'    => 'https://villatheme.com/extensions/woocommerce-photo-reviews/',
 					'css'        => VI_WOO_PHOTO_REVIEWS_CSS,
 					'image'      => VI_WOO_PHOTO_REVIEWS_IMAGES,
 					'slug'       => 'woo-photo-reviews',
@@ -461,7 +461,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
 
@@ -534,7 +534,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                 <div class="vi-ui right labeled input">
                                     <input id="max_file_uploads" type="number" value="2" readonly>
                                     <a class="vi-ui label button pro_button small" target="_blank"
-                                       href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                       href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 </div>
                                 <p class="description"><?php esc_html_e( 'The maximum quantity of photos can be uploaded with a review.', 'woo-photo-reviews' ) ?></p>
                             </td>
@@ -545,7 +545,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -580,7 +580,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Allow customers to post reviews with empty content, only rating is required', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -592,7 +592,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Require review characters not less than a certain. Leave blank to not set minimum.', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -604,7 +604,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -613,7 +613,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Show this message after a customer leaves a review', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -625,7 +625,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Show this message after a customer leaves a review and receives a coupon', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -637,7 +637,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -646,7 +646,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Allow your customer submit reviews for purchased products per order at one time', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -707,7 +707,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                     </div>
                                     <div class="field">
                                         <a class="vi-ui button pro_button small" target="_blank"
-                                           href="https://1.envato.market/L3WrM">
+                                           href="https://villatheme.com/extensions/woocommerce-photo-reviews/">
                                             <?php esc_html_e( 'Vote up high to low - premium varsion only', 'woo-photo-reviews' ) ?>
                                         </a>
                                     </div>
@@ -721,7 +721,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -741,7 +741,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -750,7 +750,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -759,7 +759,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Let your customer add caption for their review images and show it in reviews', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -771,7 +771,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Show up-vote/down-vote buttons in customer reviews', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -816,7 +816,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 											} else {
 												?>
                                                 <div class="wcpr-option-frontend-style">
-                                                    <a href="https://1.envato.market/L3WrM" class="<?php echo esc_attr( $class_active ); ?>" target="_blank"><?php echo esc_html( $value.' (Upgrade This Feature)' ) ?></a>
+                                                    <a href="https://villatheme.com/extensions/woocommerce-photo-reviews/" class="<?php echo esc_attr( $class_active ); ?>" target="_blank"><?php echo esc_html( $value.' (Upgrade This Feature)' ) ?></a>
                                                     <div class="wcpr-tooltip-image">
                                                         <img src="<?php echo esc_url( VI_WOO_PHOTO_REVIEWS_IMAGES . $value . '.jpg' ); ?>" alt="<?php echo esc_attr( $value ) ?>">
                                                     </div>
@@ -848,7 +848,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr class="masonry-options <?php echo esc_attr( $this->settings->get_params( 'photo', 'display' ) == 2 ? "wcpr-hidden-items" : '' ) ?>">
@@ -857,7 +857,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr class="masonry-options <?php echo esc_attr( $this->settings->get_params( 'photo', 'display' ) == 2 ? "wcpr-hidden-items" : '' ) ?>">
@@ -866,7 +866,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr class="masonry-options <?php echo esc_attr( $this->settings->get_params( 'photo', 'display' ) == 2 ? "wcpr-hidden-items" : '' ) ?>">
@@ -875,7 +875,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr class="masonry-options <?php echo esc_attr( $this->settings->get_params( 'photo', 'display' ) == 2 ? "wcpr-hidden-items" : '' ) ?>">
@@ -884,7 +884,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr class="default-options <?php echo esc_attr( $this->settings->get_params( 'photo', 'display' ) == 1 ? "wcpr-hidden-items" : '' ); ?>">
@@ -893,7 +893,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr class="default-options <?php echo esc_attr( $this->settings->get_params( 'photo', 'display' ) == 1 ? "wcpr-hidden-items" : '' ) ?>">
@@ -902,7 +902,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -951,7 +951,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Do not show Rating count & Overall rating if a product does not have any reviews', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -1005,7 +1005,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <p class="description">
                                     <?php esc_html_e( 'Do not show Filter if a product does not have any reviews', 'woo-photo-reviews' ) ?>
                                 </p>
@@ -1094,7 +1094,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <label for="kt_coupons_if_register"><?php esc_html_e( 'Only send coupons if author\'s email is registered an account', 'woo-photo-reviews' ) ?></label>
                             </td>
                         </tr>
@@ -1152,7 +1152,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
 								<?php esc_html_e( 'Only reviews on selected products can receive coupons. Leave blank to apply for all products', 'woo-photo-reviews' ) ?>
                             </td>
                         </tr>
@@ -1162,7 +1162,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
 								<?php esc_html_e( 'Reviews on these products will not receive coupon', 'woo-photo-reviews' ) ?>
                             </td>
                         </tr>
@@ -1173,7 +1173,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 </select><?php esc_html_e( 'Only reviews on products in these categories can receive coupon', 'woo-photo-reviews' ) ?>
                             </td>
                         </tr>
@@ -1184,7 +1184,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 </select><?php esc_html_e( 'Reviews on products in these categories will not receive coupon', 'woo-photo-reviews' ) ?>
                             </td>
                         </tr>
@@ -1531,7 +1531,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                     </table>
@@ -1561,7 +1561,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
 								<?php esc_html_e( 'These products will not appear in review reminder email.', 'woo-photo-reviews' ) ?>
                             </td>
                         </tr>
@@ -1572,7 +1572,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
 								<?php esc_html_e( 'Products in these categories will not appear in review reminder email.', 'woo-photo-reviews' ) ?>
                             </td>
                         </tr>
@@ -1584,7 +1584,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             <td>
 
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                                 <label for="exclude_non_coupon_products"><?php esc_html_e( 'Enable this if you mean to offer coupon for reviews in review reminder.', 'woo-photo-reviews' ) ?></label>
 
                             </td>
@@ -1678,7 +1678,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -1687,7 +1687,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                             </th>
                             <td>
                                 <a class="vi-ui button pro_button small" target="_blank"
-                                   href="https://1.envato.market/L3WrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
+                                   href="https://villatheme.com/extensions/woocommerce-photo-reviews/"><?php esc_html_e( 'Upgrade This Feature', 'woo-photo-reviews' ) ?></a>
                             </td>
                         </tr>
 

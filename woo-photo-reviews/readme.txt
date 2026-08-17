@@ -5,7 +5,7 @@ Tags: woocommerce reviews,product reviews image, customer reviews, review remind
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.0
-WC tested up to: 10.8.1
+WC tested up to: 11.0
 WC requires at least: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -23,7 +23,7 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 
  - Send thank you email with a coupon code when a customer review is published.
 
->[Try the Demo](https://new2new.com/?item=woocommerce-photo-reviews "Demo Photo Reviews for WooCommerce") | [Documents](http://docs.villatheme.com/?item=woocommerce-photo-reviews "Documents")| [Premium Version](https://1.envato.market/L3WrM "Premium Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
+>[Try the Demo](https://new2new.com/?item=woocommerce-photo-reviews "Demo Photo Reviews for WooCommerce") | [Documents](http://docs.villatheme.com/?item=woocommerce-photo-reviews "Documents")| [Premium Version](https://villatheme.com/extensions/woocommerce-photo-reviews/ "Premium Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
 
 ### Preview Photo Reviews for WooCommerce
 
@@ -247,7 +247,7 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 
 &#9658; **HELPFUL BUTTONS**:Customers can up-vote or down-vote reviews to show if those reviews are helpful to them or not
 
-- [GET PRO VERSION](https://1.envato.market/L3WrM) or [https://codecanyon.net/item/woocommerce-photo-reviews/21245349](https://1.envato.market/L3WrM)
+- [GET PRO VERSION](https://villatheme.com/extensions/woocommerce-photo-reviews/) or [https://codecanyon.net/item/woocommerce-photo-reviews/21245349](https://villatheme.com/extensions/woocommerce-photo-reviews/)
 
 ### MAY BE YOU NEED
 
@@ -382,8 +382,8 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 == Installation ==
 
 1. Unzip the download package
-1. Upload `woo-photo-reviews` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Upload `woo-photo-reviews` to the `/wp-content/plugins/` directory
+3. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
 
@@ -392,127 +392,131 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Review on single product page
 
 == Changelog ==
-/**1.2.27 - 2026.06.20**/
+2026.08.17 - version 1.2.28
+- Updated: Compatibility check with WC 11.0
+- Updated: Optimize code
+
+2026.06.20 - version 1.2.27
 - Update: VillaThem support
 – Updated: Compatible with WP 7.0 and WC 10.8.1
 
-/**1.2.26 - 2026.03.20**/
+2026.03.20 - version 1.2.26
 - Updated: Compatible with WC 10.6
 
-/**1.2.25 - 2026.03.06**/
+2026.03.06 - version 1.2.25
 - Update: VillaThem support
 
-/**1.2.24 - 2026.01.17**/
+2026.01.17 - version 1.2.24
 - Fixed: can not change the image on the pop-up
 
-/**1.2.23 - 2026.01.10**/
+2026.01.10 - version 1.2.23
 - Update: VillaThem support
 
-/**1.2.22 - 2025.12.22**/
+2025.12.22 - version 1.2.22
 - Updated: Compatibility with WP 6.9 & WC 10.4
 
-/**1.2.21 - 2025.08.15**/
+2025.08.15 - version 1.2.21
 – Updated: Compatible with WC 10.0.4
 – Updated: Update support class
 
-/**1.2.20 - 2025.07.26**/
+2025.07.26 - version 1.2.20
 – Updated: Compatible with WP 6.8.2 and WC 10.0.3
 – Updated: Update support class
 
-/**1.2.19 - 2025.06.23**/
+2025.06.23 - version 1.2.19
 – Updated: Compatible with WP 6.8.1 and WC 9.9.4
 – Updated: Update support class
 - Updated: Support for displaying videos uploaded from the Pro version.
 
-/**1.2.18 - 2025.04.11**/
+2025.04.11 - version 1.2.18
 – Updated: Compatible with WP 6.8 and WC 9.8.1
 – Updated: Update support class
 
-/**1.2.17 - 2025.03.29**/
+2025.03.29 - version 1.2.17
 – Updated: Compatible with WC 9.7.1
 – Updated: Update support class
 
-/**1.2.16 - 2025.03.06**/
+2025.03.06 - version 1.2.16
 – Fixed: Fixed get_date_completed()
 – Updated: Compatible with WC 9.7.0
 – Updated: Update support class
 
-/**1.2.15 - 2025.01.14**/
+2025.01.14 - version 1.2.15
 – Fixed: Fixed option "Photo is required" not working
 – Updated: Compatible with  WC 9.5.2
 – Updated: Update support class
 
-/**1.2.14 - 2024.12.13**/
+2024.12.13 - version 1.2.14
 - Dev: Added the filter hook "viwcpr_hook_target_link_product" to customize the target attribute value of the <a> tag (default: _blank).
 – Updated: Compatible with WP 6.7.2 and WC 9.4.3
 – Updated: Update support class
 
-/**1.2.13 - 2024.11.21**/
+2024.11.21 - version 1.2.13
 – Updated: Compatible with WP 6.7 and WC 9.4
 – Updated: Update support class
 
-/**1.2.12 - 2024.07.02**/
+2024.07.02 - version 1.2.12
 – Updated: Compatible with WC 9.0
 
-/**1.2.11 - 2024.04.13**/
+2024.04.13 - version 1.2.11
 – Updated: Compatible with WP 6.5 and WC 8.7
 – Updated: Update support class
 
-/**1.2.10 - 2023.01.06**/
+2023.01.06 - version 1.2.10
 – Fixed: Compatible with 'High-Performance order storage (COT)'
 - Updated: Use wp_is_mobile to detect mobile
 - Updated: Update support class
 
-/**1.2.9 - 2023.04.12**/
+2023.04.12 - version 1.2.9
 – Updated: Compatible with 'High-Performance order storage (COT)'
 
-/**1.2.8 - 2023.02.21**/
+2023.02.21 - version 1.2.8
 - Updated: Update support class
 
-/**1.2.7 - 2023.01.04**/
+2023.01.04 - version 1.2.7
 - Added: Filter to change email's content for email coupons & email reminder
 
-/**1.2.6 - 2022.12.05**/
+2022.12.05 - version 1.2.6
 - Fixed: Can not save settings
 
-/**1.2.5 - 2022.12.03**/
+2022.12.03 - version 1.2.5
 - Added: Option upload file via ajax
 - Added: Validate review content, customer information and restrict numbers of reviews without reloading the page
 
-/**1.2.4 - 2022.11.17**/
+2022.11.17 - version 1.2.4
 - Updated: Update support class
 
-/**1.2.3 - 2022.10.07**/
+2022.10.07 - version 1.2.3
 - Fixed: Display big review images content on the normal template
 - Fixed: Display Rating Count & Overall Rating
 - Added: Vietnamese translation
 
-/**1.2.2 - 2022.08.27**/
+2022.08.27 - version 1.2.2
 - Updated: Update support class
 – Updated: Compatible with WC 6.8
 
-/**1.2.1 - 2022.05.30**/
+2022.05.30 - version 1.2.1
 - Updated: Support upload image .webp
 - Updated: Display error message when customer add review via WC notice
 - Updated: Update support class
 – Updated: Compatible with WC 6.5 and WP 6.0
 
-/**1.2.0 - 2022.05.02**/
+2022.05.02 - version 1.2.0
 - Fixed: Warning notice a non-numeric value
 
-/**1.1.9 - 2022.04.20**/
+2022.04.20 - version 1.1.9
 - Updated: Update support class
 
-/**1.1.8 - 2022.03.29**/
+2022.03.29 - version 1.1.8
 - Updated: Update support class
 
-/**1.1.7 - 2022.03.21**/
+2022.03.21 - version 1.1.7
 - Updated: Support class
 
-/**1.1.6 - 2022.01.15**/
+2022.01.15 - version 1.1.6
 - Updated: Compatibility with WC 6.1
 
-/**1.1.5 - 2022.01.11**/
+2022.01.11 - version 1.1.5
 - Updated: support class
 
 /**v1.1.4.3 - 2021.07.31**/
