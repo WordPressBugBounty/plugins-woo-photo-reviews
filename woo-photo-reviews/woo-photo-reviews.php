@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Photo Reviews for WooCommerce
+ * Plugin Name: Revopic – Photo Reviews for WooCommerce
  * Plugin URI: https://villatheme.com/extensions/woocommerce-photo-reviews/
  * Description: Allow you to automatically send email to your customers to request reviews. Customers can include photos in their reviews.
- * Version: 1.2.28
+ * Version: 1.2.29
  * Author: VillaTheme
  * Author URI: http://villatheme.com
  * Text Domain: woo-photo-reviews
@@ -11,14 +11,15 @@
  * Copyright 2018-2026 VillaTheme.com. All rights reserved.
  * Requires Plugins: woocommerce
  * Requires at least: 5.0
- * Tested up to: 7.0
+ * Requires PHP: 7.4
+ * Tested up to: 7.1
  * WC requires at least: 7.0
  * WC tested up to: 11.0
  */
 if (!defined('ABSPATH')) {
     exit;
 }
-define('VI_WOO_PHOTO_REVIEWS_VERSION', '1.2.28');
+define('VI_WOO_PHOTO_REVIEWS_VERSION', '1.2.29');
 
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 define('WOO_PHOTO_REVIEWS_DIR', plugin_dir_path(__FILE__));
@@ -49,7 +50,7 @@ if (!class_exists('VI_Woo_Photo_Reviews')) {
             }
 
             $environment = new VillaTheme_Require_Environment([
-                    'plugin_name' => 'Photo Reviews for WooCommerce',
+                    'plugin_name' => 'Revopic – Photo Reviews for WooCommerce',
                     'php_version' => '7.0',
                     'wp_version' => '5.0',
                     'require_plugins' => [

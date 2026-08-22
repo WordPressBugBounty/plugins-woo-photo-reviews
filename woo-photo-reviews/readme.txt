@@ -3,8 +3,8 @@ Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: woocommerce reviews,product reviews image, customer reviews, review reminder, coupon
 Requires at least: 5.0
-Tested up to: 7.0
-Requires PHP: 7.0
+Tested up to: 7.1
+Requires PHP: 7.4
 WC tested up to: 11.0
 WC requires at least: 7.0
 Stable tag: trunk
@@ -392,6 +392,10 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Review on single product page
 
 == Changelog ==
+2026.08.22 - version 1.2.29
+- Updated: Compatibility check with WP 7.1
+- Updated: VillaThem support
+
 2026.08.17 - version 1.2.28
 - Updated: Compatibility check with WC 11.0
 - Updated: Optimize code
