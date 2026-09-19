@@ -11,8 +11,6 @@ Stable tag: trunk
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Let customers attach photos to reviews, enhanced with filterable grids and overall ratings. Auto-send review reminders and coupon emails
-
 == Description ==
 
 Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which helps you send review reminder emails, allows customers to post reviews include product pictures and send thank you emails with WooCommerce coupons to customers.
@@ -28,12 +26,6 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 ### Preview Photo Reviews for WooCommerce
 
 [youtube https://youtu.be/cIJRgHJ82tY]
-
-### IMPORTANT NOTICE
-
-- Plugin works based on WooCommerce plugin.
-
-- It is released on WordPress.org and you can use plugin as free to build themes for sale.
 
 ### FEATURES
 
@@ -247,7 +239,7 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 
 &#9658; **HELPFUL BUTTONS**:Customers can up-vote or down-vote reviews to show if those reviews are helpful to them or not
 
-- [GET PRO VERSION](https://villatheme.com/extensions/woocommerce-photo-reviews/) or [https://codecanyon.net/item/woocommerce-photo-reviews/21245349](https://villatheme.com/extensions/woocommerce-photo-reviews/)
+- [GET PRO VERSION](https://villatheme.com/extensions/woocommerce-photo-reviews/)
 
 ### MAY BE YOU NEED
 
@@ -374,6 +366,7 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 - [Project Page](https://villatheme.com)
 - [Documentation](http://docs.villatheme.com/?item=woocommerce-photo-reviews)
 - [Report Bugs/Issues](https://villatheme.com/knowledge-base/security-is-our-priority/)
+- [or Report here](https://patchstack.com/database/vdp/9e5fbe19-47d7-40de-b561-bcd2b81287e9)
 
 == Frequently Asked Questions ==
 
@@ -392,6 +385,11 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Review on single product page
 
 == Changelog ==
+2026.09.18 - version 1.2.30
+- Updated: Security hardening (settings/AJAX/upload/comment meta)
+- Updated: Compatibility check with PHP 8
+- Updated: Performance — safer admin enqueue guards
+
 2026.08.22 - version 1.2.29
 - Updated: Compatibility check with WP 7.1
 - Updated: VillaThem support

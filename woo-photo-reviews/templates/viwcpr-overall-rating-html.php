@@ -16,7 +16,8 @@ if ($overall_rating_enable !=='on' && $rating_count_enable !=='on'){
 		<div class="wcpr-overall-rating">
 			<h2>
 				<?php
-				echo apply_filters( 'woocommerce_photo_reviews_overall_rating_text', esc_html__( 'Customer reviews', 'woo-photo-reviews' ), wc_get_product($product_id) );// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$wcpr_product = wc_get_product( $product_id );
+				echo wp_kses_post( apply_filters( 'woocommerce_photo_reviews_overall_rating_text', esc_html__( 'Customer reviews', 'woo-photo-reviews' ), $wcpr_product ) );
                 ?>
 			</h2>
 			<div class="wcpr-overall-rating-main">

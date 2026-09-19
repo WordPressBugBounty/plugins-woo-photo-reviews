@@ -151,9 +151,15 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
             return;
         }
         global $wp_query;
-        $post_id = $wp_query->post->ID;
-        $product = function_exists('wc_get_product') ? wc_get_product($post_id) : new WC_Product($post_id);
-        $product_link = wc_clean($_SERVER['REQUEST_URI']);
+        $post_id = isset($wp_query->post->ID) ? (int) $wp_query->post->ID : 0;
+        if (!$post_id) {
+            return;
+        }
+        $product = function_exists('wc_get_product') ? wc_get_product($post_id) : false;
+        if (!$product) {
+            return;
+        }
+        $product_link = isset($_SERVER['REQUEST_URI']) ? wc_clean(wp_unslash($_SERVER['REQUEST_URI'])) : '';
         $product_link1 = $product->get_permalink();
         $product_link = remove_query_arg(array('image', 'verified', 'rating'), $product_link);
         $product_link1 = remove_query_arg(array('image', 'verified', 'rating'), $product_link1);
@@ -400,6 +406,9 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
             $products = array_unique($products);
             if (count($products)) {
                 $user_email = $order->get_billing_email();
+                if ( ! is_email( $user_email ) ) {
+                    return;
+                }
                 $customer_name = $order->get_billing_first_name();
                 $t_amount = $this->settings->get_params('followup_email', 'amount');
                 $t_unit = $this->settings->get_params('followup_email', 'unit');
@@ -503,6 +512,9 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                     if (is_a($order, 'WC_Order_Refund')) {
                         $order = wc_get_order($order->get_parent_id());
                     }
+                    if (!$order) {
+                        return;
+                    }
                     $order->update_meta_data('_wcpr_review_reminder', array(
                         'status' => 'pending',
                         'time' => $time,
@@ -515,6 +527,9 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
     }
 
     public function send_schedule_email( $user_email, $customer_name, $products, $order_id, $time, $date_create, $date_complete ) {
+        if ( ! is_email( $user_email ) ) {
+            return;
+        }
         if (count($products)) {
             $order = wc_get_order($order_id);
             /*Check order refunded*/
@@ -892,6 +907,9 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
     }
 
     public function send_email( $user_email, $customer_name, $coupon_code, $date_expires, $comment_id ) {
+        if ( ! is_email( $user_email ) ) {
+            return;
+        }
         $date_format = VI_WOO_PHOTO_REVIEWS_DATA::get_date_format();
         $email_temp = $this->settings->get_params('coupon', 'email');
         $content = nl2br(stripslashes($email_temp['content']));
@@ -1124,7 +1142,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
         $file_type_pattern = '/[^\?]+\.(jpg|JPG|jpeg|JPEG|jpe|JPE|gif|GIF|png|PNG|bmp|BMP|webp|WEBP)/';
         foreach ($names as $name) {
             if ($name && !preg_match($file_type_pattern, $name)) {
-                $error = esc_html__('Only JPG, JPEG, BMP, PNG , WEBP, GIF, MP4 and WEBM are allowed.', 'woo-photo-reviews');
+                $error = esc_html('Only JPG, JPEG, BMP, PNG , WEBP, GIF, MP4 and WEBM are allowed.', 'woo-photo-reviews');
                 break;
             }
         }

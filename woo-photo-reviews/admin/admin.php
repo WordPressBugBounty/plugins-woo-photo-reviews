@@ -403,6 +403,30 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 		<?php
 	}
 
+    /**
+	 * Locked Pro option row: label + disabled control area + upgrade button.
+	 *
+	 * @param string $label Field label.
+	 * @param string $hint  Optional description under the control.
+	 */
+    protected function echo_pro_locked_row( $label, $hint = '' ) {
+        ?>
+        <tr>
+            <th>
+                <label><?php echo esc_html( $label ); ?></label>
+            </th>
+            <td>
+                <a class="vi-ui button pro_button small" target="_blank" href="<?php echo esc_url( 'https://villatheme.com/extensions/woocommerce-photo-reviews/' ); ?>">
+                    <?php echo esc_html__( 'Upgrade This Feature', 'woo-photo-reviews' ); ?>
+                </a>
+                <?php if ( $hint ) : ?>
+                    <p class="description"><?php echo esc_html( $hint ); ?></p>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php
+    }
+
 	public function settings_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -426,6 +450,11 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                     <div class="item" data-tab="rating_filter"><?php esc_html_e( 'Rating Counts & Filters', 'woo-photo-reviews' ); ?></div>
                     <div class="item" data-tab="coupon"><?php esc_html_e( 'Coupon', 'woo-photo-reviews' ); ?></div>
                     <div class="item" data-tab="email"><?php esc_html_e( 'Review Reminder', 'woo-photo-reviews' ); ?></div>
+                    <div class="item" data-tab="resend_email"><?php esc_html_e( 'Resend Review Reminder', 'woo-photo-reviews' ); ?></div>
+                    <div class="item" data-tab="custom_fields"><?php esc_html_e( 'Optional Fields', 'woo-photo-reviews' ); ?></div>
+                    <div class="item" data-tab="aliexpress_reviews"><?php esc_html_e( 'AliExpress Reviews', 'woo-photo-reviews' ); ?></div>
+                    <div class="item" data-tab="chrome_extension"><?php esc_html_e( 'Chrome Extension', 'woo-photo-reviews' ); ?></div>
+                    <div class="item" data-tab="share_reviews"><?php esc_html_e( 'Share reviews', 'woo-photo-reviews' ); ?></div>
                 </div>
                 <div class="vi-ui bottom active tab segment" data-tab="general">
                     <table class="form-table">
@@ -1695,6 +1724,72 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 
 
                 </div>
+                <div class="vi-ui bottom tab segment" data-tab="resend_email">
+                    <div class="vi-ui warning message">
+						<?php esc_html_e( 'Resend Review Reminder is available in the Premium version.', 'woo-photo-reviews' ); ?>
+                    </div>
+                    <table class="form-table">
+						<?php
+						$this->echo_pro_locked_row( __( 'Enable resend reminder', 'woo-photo-reviews' ), __( 'Resend reminder emails when the customer has not rated yet.', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Resend reminder email after (days)', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Stop after (times)', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Resend email at (hour)', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Email template to resend', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Resend email content', 'woo-photo-reviews' ) );
+						?>
+                    </table>
+                </div>
+                <div class="vi-ui bottom tab segment" data-tab="custom_fields">
+                    <div class="vi-ui warning message">
+						<?php esc_html_e( 'Optional Fields are available in the Premium version.', 'woo-photo-reviews' ); ?>
+                    </div>
+                    <table class="form-table">
+						<?php
+						$this->echo_pro_locked_row( __( 'Enable optional fields', 'woo-photo-reviews' ), __( 'Add optional input fields in the review form and display them in customer reviews.', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Show optional fields from product variations', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Manage custom fields', 'woo-photo-reviews' ), __( 'Add / edit optional field labels and options.', 'woo-photo-reviews' ) );
+						?>
+                    </table>
+                </div>
+                <div class="vi-ui bottom tab segment" data-tab="aliexpress_reviews">
+                    <div class="vi-ui warning message">
+						<?php esc_html_e( 'AliExpress Reviews import tools are available in the Premium version.', 'woo-photo-reviews' ); ?>
+                    </div>
+                    <table class="form-table">
+						<?php
+						$this->echo_pro_locked_row( __( 'Phrases filter (search & replace)', 'woo-photo-reviews' ), __( 'Search and replace strings in review author/content when importing.', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Show review country', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Import AliExpress reviews', 'woo-photo-reviews' ) );
+						?>
+                    </table>
+                </div>
+                <div class="vi-ui bottom tab segment" data-tab="chrome_extension">
+                    <div class="vi-ui warning message">
+						<?php esc_html_e( 'Chrome Extension import options are available in the Premium version.', 'woo-photo-reviews' ); ?>
+                    </div>
+                    <table class="form-table">
+						<?php
+						$this->echo_pro_locked_row( __( 'Secret key', 'woo-photo-reviews' ), __( 'Key used by the Chrome extension to import reviews.', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Look up for product ID by', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Import reviews to', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Review status', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Set review verified', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Review vote', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Import order info to optional fields', 'woo-photo-reviews' ) );
+						?>
+                    </table>
+                </div>
+                <div class="vi-ui bottom tab segment" data-tab="share_reviews">
+                    <div class="vi-ui warning message">
+						<?php esc_html_e( 'Share reviews across products is available in the Premium version.', 'woo-photo-reviews' ); ?>
+                    </div>
+                    <table class="form-table">
+						<?php
+						$this->echo_pro_locked_row( __( 'Share review groups', 'woo-photo-reviews' ), __( 'Group products so they share the same reviews.', 'woo-photo-reviews' ) );
+						$this->echo_pro_locked_row( __( 'Add / remove share groups', 'woo-photo-reviews' ) );
+						?>
+                    </table>
+                </div>
                 <p class="wcpr-button-save-settings-container"><input type="submit" class="vi-ui primary button" name="submit" value="<?php esc_html_e( 'Save', 'woo-photo-reviews' ) ?>"></p>
             </form>
         </div>
@@ -1703,12 +1798,9 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 	}
 
 	public function save_settings() {
-		if ( isset( $_REQUEST['wcpr_nonce_field'] ) && ! wp_verify_nonce( sanitize_text_field( $_REQUEST['wcpr_nonce_field'] ), 'wcpr_settings_page_save' ) ) {
-			return;
-		}
 		global $pagenow;
 		$page = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
-		if ( $pagenow != 'admin.php' || $page != 'woo-photo-reviews' ) {
+		if ( $pagenow !== 'admin.php' || $page !== 'woo-photo-reviews' ) {
 			return;
 		}
 
@@ -1728,100 +1820,130 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			<?php
 		}
 
-		if ( ! empty( $_REQUEST['submit'] ) ) {
-			if ( sanitize_text_field( $_POST['kt_coupons_select'] ) == 'kt_existing_coupon' && ! isset( $_POST['kt_existing_coupons'] ) ) {
-				?>
-                <div class="error">
-                    <p><?php esc_html_e( 'Please select a coupon then save settings!', 'woo-photo-reviews' ) ?></p>
-                </div>
-				<?php
-				return;
-			}
+		// Only persist when the settings form is submitted.
+		if ( empty( $_POST['submit'] ) ) {
+			return;
 		}
-		if ( empty( $_POST['wcpr_nonce_field'] ) || ! wp_verify_nonce( wp_unslash( sanitize_text_field( $_POST['wcpr_nonce_field'] ) ), 'wcpr_settings_page_save' ) ) {
+		if ( empty( $_POST['wcpr_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wcpr_nonce_field'] ) ), 'wcpr_settings_page_save' ) ) {
 			return;
 		}
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		$args = array(
-			'enable'                     => isset( $_POST['wcpr-enable'] ) ? sanitize_text_field( $_POST['wcpr-enable'] ) : 'off',
-			'mobile'                     => isset( $_POST['wcpr-mobile'] ) ? sanitize_text_field( $_POST['wcpr-mobile'] ) : 'off',
-			'key'                        => isset( $_POST['wcpr-key'] ) ? sanitize_text_field( $_POST['wcpr-key'] ) : '',
-			'photo'                      => array(
-				'enable'                 => isset( $_POST['photo_reviews_options'] ) ? sanitize_text_field( $_POST['photo_reviews_options'] ) : "off",
-				'maxsize'                => isset( $_POST['image_maxsize'] ) ? absint( sanitize_text_field( $_POST['image_maxsize'] ) ) : "",
-				'required'               => isset( $_POST['photo_reviews_required'] ) ? sanitize_text_field( $_POST['photo_reviews_required'] ) : "off",
-				'display'                => isset( $_POST['reviews_display'] ) ? sanitize_text_field( $_POST['reviews_display'] ) : 2,
-				'sort'                   => array(
-					'time' => isset( $_POST['reviews_sort_time'] ) ? sanitize_text_field( $_POST['reviews_sort_time'] ) : 1
-				),
-				'star_color'             => isset( $_POST['masonry_star_color'] ) ? sanitize_text_field( $_POST['masonry_star_color'] ) : '',
-				'rating_count'           => isset( $_POST['ratings_count'] ) ? sanitize_text_field( $_POST['ratings_count'] ) : "off",
-				'rating_count_bar_color' => isset( $_POST['rating-count-bar-color'] ) ? sanitize_text_field( $_POST['rating-count-bar-color'] ) : '',
-				'filter'                 => array(
-					'enable'              => isset( $_POST['filter-enable'] ) ? sanitize_text_field( $_POST['filter-enable'] ) : "off",
-					'area_border_color'   => isset( $_POST['filter-area-border-color'] ) ? sanitize_text_field( $_POST['filter-area-border-color'] ) : '',
-					'area_bg_color'       => isset( $_POST['filter-area-bg-color'] ) ? sanitize_text_field( $_POST['filter-area-bg-color'] ) : '',
-					'button_border_color' => isset( $_POST['filter-button-border-color'] ) ? sanitize_text_field( $_POST['filter-button-border-color'] ) : '',
-					'button_color'        => isset( $_POST['filter-button-color'] ) ? sanitize_text_field( $_POST['filter-button-color'] ) : '',
-					'button_bg_color'     => isset( $_POST['filter-button-bg-color'] ) ? sanitize_text_field( $_POST['filter-button-bg-color'] ) : '',
+		if ( isset( $_POST['kt_coupons_select'] ) && sanitize_text_field( wp_unslash( $_POST['kt_coupons_select'] ) ) === 'kt_existing_coupon' && ! isset( $_POST['kt_existing_coupons'] ) ) {
+			?>
+            <div class="error">
+                <p><?php esc_html_e( 'Please select a coupon then save settings!', 'woo-photo-reviews' ) ?></p>
+            </div>
+			<?php
+			return;
+		}
 
+		$prev = get_option( '_wcpr_nkt_setting', array() );
+		if ( ! is_array( $prev ) ) {
+			$prev = array();
+		}
+
+		// Whitelist Free fields only — Pro POST keys (followup_email_loop, secret_key, share_reviews, custom fields, etc.) are ignored.
+		$photo_enable = isset( $_POST['photo_reviews_options'] ) ? sanitize_text_field( wp_unslash( $_POST['photo_reviews_options'] ) ) : 'off';
+		if ( $photo_enable !== 'on' && $photo_enable !== 'off' ) {
+			$photo_enable = 'off';
+		}
+
+		$args = array(
+			'enable'                     => isset( $_POST['wcpr-enable'] ) ? sanitize_text_field( wp_unslash( $_POST['wcpr-enable'] ) ) : 'off',
+			'mobile'                     => isset( $_POST['wcpr-mobile'] ) ? sanitize_text_field( wp_unslash( $_POST['wcpr-mobile'] ) ) : 'off',
+			'key'                        => isset( $prev['key'] ) ? $prev['key'] : '',
+			'photo'                      => array(
+				'enable'                 => $photo_enable,
+				'maxsize'                => isset( $_POST['image_maxsize'] ) ? absint( sanitize_text_field( wp_unslash( $_POST['image_maxsize'] ) ) ) : '',
+				'maxfiles'               => 2,
+				'required'               => isset( $_POST['photo_reviews_required'] ) ? sanitize_text_field( wp_unslash( $_POST['photo_reviews_required'] ) ) : 'off',
+				'display'                => isset( $_POST['reviews_display'] ) ? sanitize_text_field( wp_unslash( $_POST['reviews_display'] ) ) : 2,
+				'sort'                   => array(
+					'time' => isset( $_POST['reviews_sort_time'] ) ? sanitize_text_field( wp_unslash( $_POST['reviews_sort_time'] ) ) : 1,
 				),
-				'custom_css'             => isset( $_POST['photo-reviews-css'] ) ? sanitize_textarea_field( wp_unslash( $_POST['photo-reviews-css'] ) ) : "",
-				'gdpr'                   => isset( $_POST['gdpr_policy'] ) ? sanitize_textarea_field( $_POST['gdpr_policy'] ) : "off",
-				'gdpr_message'           => isset( $_POST['gdpr_message'] ) ? wp_kses_post( wp_unslash( $_POST['gdpr_message'] ) ) : "",
-				'overall_rating'         => isset( $_POST['overall_rating'] ) ? sanitize_text_field( $_POST['overall_rating'] ) : "off",
-				'show_review_date'       => isset( $_POST['show_review_date'] ) ? sanitize_text_field( $_POST['show_review_date'] ) : "",
+				'star_color'             => isset( $_POST['masonry_star_color'] ) ? sanitize_text_field( wp_unslash( $_POST['masonry_star_color'] ) ) : '',
+				'rating_count'           => isset( $_POST['ratings_count'] ) ? sanitize_text_field( wp_unslash( $_POST['ratings_count'] ) ) : 'off',
+				'rating_count_bar_color' => isset( $_POST['rating-count-bar-color'] ) ? sanitize_text_field( wp_unslash( $_POST['rating-count-bar-color'] ) ) : '',
+				'filter'                 => array(
+					'enable'              => isset( $_POST['filter-enable'] ) ? sanitize_text_field( wp_unslash( $_POST['filter-enable'] ) ) : 'off',
+					'area_border_color'   => isset( $_POST['filter-area-border-color'] ) ? sanitize_text_field( wp_unslash( $_POST['filter-area-border-color'] ) ) : '',
+					'area_bg_color'       => isset( $_POST['filter-area-bg-color'] ) ? sanitize_text_field( wp_unslash( $_POST['filter-area-bg-color'] ) ) : '',
+					'button_border_color' => isset( $_POST['filter-button-border-color'] ) ? sanitize_text_field( wp_unslash( $_POST['filter-button-border-color'] ) ) : '',
+					'button_color'        => isset( $_POST['filter-button-color'] ) ? sanitize_text_field( wp_unslash( $_POST['filter-button-color'] ) ) : '',
+					'button_bg_color'     => isset( $_POST['filter-button-bg-color'] ) ? sanitize_text_field( wp_unslash( $_POST['filter-button-bg-color'] ) ) : '',
+				),
+				'custom_css'             => isset( $_POST['photo-reviews-css'] ) ? sanitize_textarea_field( wp_unslash( $_POST['photo-reviews-css'] ) ) : '',
+				'gdpr'                   => isset( $_POST['gdpr_policy'] ) ? sanitize_text_field( wp_unslash( $_POST['gdpr_policy'] ) ) : 'off',
+				'gdpr_message'           => isset( $_POST['gdpr_message'] ) ? wp_kses_post( wp_unslash( $_POST['gdpr_message'] ) ) : '',
+				'overall_rating'         => isset( $_POST['overall_rating'] ) ? sanitize_text_field( wp_unslash( $_POST['overall_rating'] ) ) : 'off',
+				'show_review_date'       => isset( $_POST['show_review_date'] ) ? sanitize_text_field( wp_unslash( $_POST['show_review_date'] ) ) : '',
 			),
 			'coupon'                     => array(
-				'enable'          => isset( $_POST['kt_coupons_enable'] ) ? sanitize_text_field( $_POST['kt_coupons_enable'] ) : "off",
+				'enable'          => isset( $_POST['kt_coupons_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_coupons_enable'] ) ) : 'off',
 				'require'         => array(
-					'photo'      => isset( $_POST['kt_coupons_if_photo'] ) ? sanitize_text_field( $_POST['kt_coupons_if_photo'] ) : "off",
-					'min_rating' => isset( $_POST['kt_coupons_if_min_rating'] ) ? absint( sanitize_text_field( $_POST['kt_coupons_if_min_rating'] ) ) : 0,
-					'owner'      => isset( $_POST['kt_coupons_if_verified'] ) ? sanitize_text_field( $_POST['kt_coupons_if_verified'] ) : "off",
+					'photo'      => isset( $_POST['kt_coupons_if_photo'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_coupons_if_photo'] ) ) : 'off',
+					'min_rating' => isset( $_POST['kt_coupons_if_min_rating'] ) ? absint( sanitize_text_field( wp_unslash( $_POST['kt_coupons_if_min_rating'] ) ) ) : 0,
+					'owner'      => isset( $_POST['kt_coupons_if_verified'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_coupons_if_verified'] ) ) : 'off',
 				),
-				'form_title'      => isset( $_POST['review_form_description'] ) ? sanitize_text_field( $_POST['review_form_description'] ) : "",
+				'form_title'      => isset( $_POST['review_form_description'] ) ? sanitize_text_field( wp_unslash( $_POST['review_form_description'] ) ) : '',
 				'email'           => array(
-					'subject' => isset( $_POST['subject'] ) ? sanitize_text_field( $_POST['subject'] ) : "",
-					'heading' => isset( $_POST['heading'] ) ? sanitize_text_field( $_POST['heading'] ) : "",
-					'content' => isset( $_POST['content'] ) ? wp_kses_post( wp_unslash( $_POST['content'] ) ) : ""
+					'subject' => isset( $_POST['subject'] ) ? sanitize_text_field( wp_unslash( $_POST['subject'] ) ) : '',
+					'heading' => isset( $_POST['heading'] ) ? sanitize_text_field( wp_unslash( $_POST['heading'] ) ) : '',
+					'content' => isset( $_POST['content'] ) ? wp_kses_post( wp_unslash( $_POST['content'] ) ) : '',
 				),
-				'coupon_select'   => isset( $_POST['kt_coupons_select'] ) ? sanitize_text_field( $_POST['kt_coupons_select'] ) : 'kt_generate_coupon',
+				'coupon_select'   => isset( $_POST['kt_coupons_select'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_coupons_select'] ) ) : 'kt_generate_coupon',
 				'unique_coupon'   => array(
-					'discount_type'               => isset( $_POST['kt_discount_type'] ) ? sanitize_text_field( $_POST['kt_discount_type'] ) : "",
-					'coupon_amount'               => isset( $_POST['kt_coupon_amount'] ) ? sanitize_text_field( $_POST['kt_coupon_amount'] ) : 0,
-					'allow_free_shipping'         => isset( $_POST['kt_free_shipping'] ) ? sanitize_text_field( $_POST['kt_free_shipping'] ) : 'no',
-					'expiry_date'                 => isset( $_POST['kt_expiry_date'] ) ? sanitize_text_field( $_POST['kt_expiry_date'] ) : '',
-					'min_spend'                   => isset( $_POST['kt_min_spend'] ) ? wc_format_decimal( sanitize_text_field( $_POST['kt_min_spend'] ) ) : "",
-					'max_spend'                   => isset( $_POST['kt_max_spend'] ) ? wc_format_decimal( sanitize_text_field( $_POST['kt_max_spend'] ) ) : "",
-					'individual_use'              => isset( $_POST['kt_individual_use'] ) ? sanitize_text_field( $_POST['kt_individual_use'] ) : "no",
-					'exclude_sale_items'          => isset( $_POST['kt_exclude_sale_items'] ) ? sanitize_text_field( $_POST['kt_exclude_sale_items'] ) : "no",
-					'limit_per_coupon'            => isset( $_POST['kt_limit_per_coupon'] ) ? absint( sanitize_text_field( $_POST['kt_limit_per_coupon'] ) ) : "",
-					'limit_to_x_items'            => isset( $_POST['kt_limit_to_x_items'] ) ? absint( sanitize_text_field( $_POST['kt_limit_to_x_items'] ) ) : "",
-					'limit_per_user'              => isset( $_POST['kt_limit_per_user'] ) ? absint( sanitize_text_field( $_POST['kt_limit_per_user'] ) ) : "",
-					'product_ids'                 => isset( $_POST['kt_product_ids'] ) ? wc_clean( $_POST['kt_product_ids'] ) : array(),
-					'excluded_product_ids'        => isset( $_POST['kt_excluded_product_ids'] ) ? wc_clean( $_POST['kt_excluded_product_ids'] ) : array(),
-					'product_categories'          => isset( $_POST['kt_product_categories'] ) ? wc_clean( $_POST['kt_product_categories'] ) : array(),
-					'excluded_product_categories' => isset( $_POST['kt_excluded_product_categories'] ) ? wc_clean( $_POST['kt_excluded_product_categories'] ) : array(),
-					'coupon_code_prefix'          => isset( $_POST['kt_coupon_code_prefix'] ) ? sanitize_text_field( $_POST['kt_coupon_code_prefix'] ) : ""
+					'discount_type'               => isset( $_POST['kt_discount_type'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_discount_type'] ) ) : '',
+					'coupon_amount'               => isset( $_POST['kt_coupon_amount'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_coupon_amount'] ) ) : 0,
+					'allow_free_shipping'         => isset( $_POST['kt_free_shipping'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_free_shipping'] ) ) : 'no',
+					'expiry_date'                 => isset( $_POST['kt_expiry_date'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_expiry_date'] ) ) : '',
+					'min_spend'                   => isset( $_POST['kt_min_spend'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['kt_min_spend'] ) ) ) : '',
+					'max_spend'                   => isset( $_POST['kt_max_spend'] ) ? wc_format_decimal( sanitize_text_field( wp_unslash( $_POST['kt_max_spend'] ) ) ) : '',
+					'individual_use'              => isset( $_POST['kt_individual_use'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_individual_use'] ) ) : 'no',
+					'exclude_sale_items'          => isset( $_POST['kt_exclude_sale_items'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_exclude_sale_items'] ) ) : 'no',
+					'limit_per_coupon'            => isset( $_POST['kt_limit_per_coupon'] ) ? absint( sanitize_text_field( wp_unslash( $_POST['kt_limit_per_coupon'] ) ) ) : '',
+					'limit_to_x_items'            => isset( $_POST['kt_limit_to_x_items'] ) ? absint( sanitize_text_field( wp_unslash( $_POST['kt_limit_to_x_items'] ) ) ) : '',
+					'limit_per_user'              => isset( $_POST['kt_limit_per_user'] ) ? absint( sanitize_text_field( wp_unslash( $_POST['kt_limit_per_user'] ) ) ) : '',
+					'product_ids'                 => isset( $_POST['kt_product_ids'] ) ? wc_clean( wp_unslash( $_POST['kt_product_ids'] ) ) : array(),
+					'excluded_product_ids'        => isset( $_POST['kt_excluded_product_ids'] ) ? wc_clean( wp_unslash( $_POST['kt_excluded_product_ids'] ) ) : array(),
+					'product_categories'          => isset( $_POST['kt_product_categories'] ) ? wc_clean( wp_unslash( $_POST['kt_product_categories'] ) ) : array(),
+					'excluded_product_categories' => isset( $_POST['kt_excluded_product_categories'] ) ? wc_clean( wp_unslash( $_POST['kt_excluded_product_categories'] ) ) : array(),
+					'coupon_code_prefix'          => isset( $_POST['kt_coupon_code_prefix'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_coupon_code_prefix'] ) ) : '',
 				),
-				'existing_coupon' => isset( $_POST['kt_existing_coupons'] ) ? sanitize_text_field( $_POST['kt_existing_coupons'] ) : ""
+				'existing_coupon' => isset( $_POST['kt_existing_coupons'] ) ? sanitize_text_field( wp_unslash( $_POST['kt_existing_coupons'] ) ) : '',
 			),
 			'followup_email'             => array(
-				'enable'  => isset( $_POST['follow_up_email_enable'] ) ? sanitize_text_field( $_POST['follow_up_email_enable'] ) : "off",
-				'subject' => isset( $_POST['follow_up_email_subject'] ) ? sanitize_text_field( $_POST['follow_up_email_subject'] ) : "",
-				'content' => isset( $_POST['follow_up_email_content'] ) ? wp_kses_post( wp_unslash( $_POST['follow_up_email_content'] ) ) : "",
-				'heading' => isset( $_POST['follow_up_email_heading'] ) ? sanitize_text_field( $_POST['follow_up_email_heading'] ) : "",
-				'amount'  => isset( $_POST['email_time_amount'] ) ? sanitize_text_field( $_POST['email_time_amount'] ) : "",
-				'unit'    => isset( $_POST['email_time_unit'] ) ? sanitize_text_field( $_POST['email_time_unit'] ) : "",
+				'enable'  => isset( $_POST['follow_up_email_enable'] ) ? sanitize_text_field( wp_unslash( $_POST['follow_up_email_enable'] ) ) : 'off',
+				'subject' => isset( $_POST['follow_up_email_subject'] ) ? sanitize_text_field( wp_unslash( $_POST['follow_up_email_subject'] ) ) : '',
+				'content' => isset( $_POST['follow_up_email_content'] ) ? wp_kses_post( wp_unslash( $_POST['follow_up_email_content'] ) ) : '',
+				'heading' => isset( $_POST['follow_up_email_heading'] ) ? sanitize_text_field( wp_unslash( $_POST['follow_up_email_heading'] ) ) : '',
+				'amount'  => isset( $_POST['email_time_amount'] ) ? sanitize_text_field( wp_unslash( $_POST['email_time_amount'] ) ) : '',
+				'unit'    => isset( $_POST['email_time_unit'] ) ? sanitize_text_field( wp_unslash( $_POST['email_time_unit'] ) ) : '',
 			),
-			'ajax_check_content_reviews' => isset( $_POST['ajax_check_content_reviews'] ) ? sanitize_text_field( $_POST['ajax_check_content_reviews'] ) : "",
-			'ajax_upload_file'           => isset( $_POST['ajax_upload_file'] ) ? sanitize_text_field( $_POST['ajax_upload_file'] ) : "",
-			'reviews_anchor_link'        => isset( $_POST['wcpr_reviews_anchor_link'] ) ? sanitize_text_field( $_POST['wcpr_reviews_anchor_link'] ) : "",
-			'set_email_restriction'      => isset( $_POST['set_email_restriction'] ) ? sanitize_text_field( $_POST['set_email_restriction'] ) : "",
+			'ajax_check_content_reviews' => isset( $_POST['ajax_check_content_reviews'] ) ? sanitize_text_field( wp_unslash( $_POST['ajax_check_content_reviews'] ) ) : '',
+			'ajax_upload_file'           => isset( $_POST['ajax_upload_file'] ) ? sanitize_text_field( wp_unslash( $_POST['ajax_upload_file'] ) ) : '',
+			'reviews_anchor_link'        => isset( $_POST['wcpr_reviews_anchor_link'] ) ? sanitize_text_field( wp_unslash( $_POST['wcpr_reviews_anchor_link'] ) ) : '',
+			'set_email_restriction'      => isset( $_POST['set_email_restriction'] ) ? sanitize_text_field( wp_unslash( $_POST['set_email_restriction'] ) ) : '',
 		);
+
+		// Preserve Free sub-keys not posted (e.g. filter active colors, verified badge) without importing Pro schemas.
+		if ( ! empty( $prev['photo'] ) && is_array( $prev['photo'] ) ) {
+			$args['photo'] = array_replace_recursive( $prev['photo'], $args['photo'] );
+			$args['photo']['maxfiles'] = 2;
+		}
+		if ( ! empty( $prev['coupon'] ) && is_array( $prev['coupon'] ) ) {
+			$args['coupon'] = array_replace_recursive( $prev['coupon'], $args['coupon'] );
+		}
+		if ( ! empty( $prev['followup_email'] ) && is_array( $prev['followup_email'] ) ) {
+			$args['followup_email'] = array_replace_recursive( $prev['followup_email'], $args['followup_email'] );
+		}
+		if ( ! empty( $prev['upload_allow'] ) ) {
+			$args['upload_allow'] = $prev['upload_allow'];
+		}
+
 		update_option( '_wcpr_nkt_setting', $args );
 		$woo_photo_reviews_settings = $args;
 		?>
@@ -1842,20 +1964,21 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 	}
 
 	public function save_comment_meta( $comment_id ) {
-		if ( isset( $_REQUEST['wcpr_edit_comment_nonce_field'] ) && ! wp_verify_nonce( sanitize_text_field( $_REQUEST['wcpr_edit_comment_nonce_field'] ), 'wcpr_edit_comment_save' ) ) {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		if ( ! $screen || $screen->id !== 'comment' ) {
 			return;
 		}
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( empty( $_POST['wcpr_edit_comment_nonce_field'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wcpr_edit_comment_nonce_field'] ) ), 'wcpr_edit_comment_save' ) ) {
+			return;
+		}
+		if ( ! current_user_can( 'edit_comment', $comment_id ) && ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		$screen = get_current_screen();
-		if ( $screen->id == 'comment' ) {
-			if ( ! empty( $_POST['photo-reviews-id'] ) ) {
-				update_comment_meta( $comment_id, 'reviews-images', wc_clean( $_POST['photo-reviews-id'] ) );
-			} elseif ( get_comment_meta( $comment_id, 'reviews-images', true ) ) {
-				delete_comment_meta( $comment_id, 'reviews-images' );
-			}
+		if ( ! empty( $_POST['photo-reviews-id'] ) ) {
+			update_comment_meta( $comment_id, 'reviews-images', array_map( 'absint', (array) wc_clean( wp_unslash( $_POST['photo-reviews-id'] ) ) ) );
+		} elseif ( get_comment_meta( $comment_id, 'reviews-images', true ) ) {
+			delete_comment_meta( $comment_id, 'reviews-images' );
 		}
 	}
 
@@ -2049,6 +2172,9 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			}
 		}
 		$screen = get_current_screen();
+		if ( ! $screen || empty( $screen->id ) ) {
+			return;
+		}
 		switch ( $screen->id ) {
 			case 'comment':
 				wp_enqueue_style( 'wcpr_admin_comment', VI_WOO_PHOTO_REVIEWS_CSS . 'comment_screen.css', array(), VI_WOO_PHOTO_REVIEWS_VERSION );
@@ -2139,7 +2265,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
 				$prd = wc_get_product( get_the_ID() );
-				if ( $prd->is_type( 'variation' ) ) {
+				if ( ! $prd || $prd->is_type( 'variation' ) ) {
 					continue;
 				}
 				$product          = array( 'id' => get_the_ID(), 'text' => get_the_title() );
@@ -2172,6 +2298,9 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
 				$prd = wc_get_product( get_the_ID() );
+				if ( ! $prd ) {
+					continue;
+				}
 				if ( $prd->has_child() && $prd->is_type( 'variable' ) ) {
 					$product_children = $prd->get_children();
 					if ( count( $product_children ) ) {
@@ -2183,6 +2312,9 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 								);
 							} else {
 								$child_wc  = wc_get_product( $product_child );
+								if ( ! $child_wc ) {
+									continue;
+								}
 								$get_atts  = $child_wc->get_variation_attributes();
 								$attr_name = array_values( $get_atts )[0];
 								$product   = array(

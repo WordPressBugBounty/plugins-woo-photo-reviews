@@ -1,4 +1,9 @@
 *** Photo Reviews for WooCommerce Changelog ***
+2026.09.18 - version 1.2.30
+- Updated: Security hardening (settings/AJAX/upload/comment meta)
+- Updated: Compatibility check with PHP 8
+- Updated: Performance — safer admin enqueue guards
+
 2026.08.22 - version 1.2.29
 - Updated: Compatibility check with WP 7.1
 - Updated: VillaThem support
