@@ -1274,6 +1274,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                 exit;
             }
         }
+        $img_id = viwcpr_filter_review_image_ids( $img_id );
         if (is_array($img_id) && count($img_id)) {
             update_comment_meta($comment_id, 'reviews-images', $img_id);
         }

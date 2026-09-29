@@ -74,3 +74,28 @@ if ( ! function_exists( 'viwcpr_set_time_limit' ) ) {
 		@set_time_limit( 0 );
 	}
 }
+if ( ! function_exists( 'viwcpr_filter_review_image_ids' ) ) {
+	/**
+	 * Keep only WordPress attachment IDs for reviews-images meta.
+	 *
+	 * @param array|string $ids Comma-separated string or list of IDs.
+	 * @return int[]
+	 */
+	function viwcpr_filter_review_image_ids( $ids ) {
+		if ( is_string( $ids ) ) {
+			$ids = explode( ',', $ids );
+		}
+		if ( ! is_array( $ids ) ) {
+			return array();
+		}
+		$filtered = array();
+		foreach ( $ids as $id ) {
+			$id = absint( $id );
+			if ( $id && 'attachment' === get_post_type( $id ) ) {
+				$filtered[] = $id;
+			}
+		}
+
+		return array_values( array_unique( $filtered ) );
+	}
+}

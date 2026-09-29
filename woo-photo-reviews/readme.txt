@@ -5,7 +5,7 @@ Tags: woocommerce reviews,product reviews image, customer reviews, review remind
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-WC tested up to: 11.0
+WC tested up to: 11.1.2
 WC requires at least: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -366,7 +366,6 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 - [Project Page](https://villatheme.com)
 - [Documentation](http://docs.villatheme.com/?item=woocommerce-photo-reviews)
 - [Report Bugs/Issues](https://villatheme.com/knowledge-base/security-is-our-priority/)
-- [or Report here](https://patchstack.com/database/vdp/9e5fbe19-47d7-40de-b561-bcd2b81287e9)
 
 == Frequently Asked Questions ==
 
@@ -385,6 +384,12 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Review on single product page
 
 == Changelog ==
+2026.09.29 - version 1.2.31
+- Fixed: Stored XSS when enlarging review photos (data-image_src)
+- Fixed: Only allow attachment IDs in review image meta; harden image cleanup on review delete
+- Fixed: Skip review reminder when order billing email is missing or invalid
+- Updated: Compatibility check with WC 11.1.2
+
 2026.09.18 - version 1.2.30
 - Updated: Security hardening (settings/AJAX/upload/comment meta)
 - Updated: Compatibility check with PHP 8

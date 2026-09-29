@@ -1,4 +1,10 @@
 *** Photo Reviews for WooCommerce Changelog ***
+2026.09.29 - version 1.2.31
+- Fixed: Stored XSS when enlarging review photos (data-image_src)
+- Fixed: Only allow attachment IDs in review image meta; harden image cleanup on review delete
+- Fixed: Skip review reminder when order billing email is missing or invalid
+- Updated: Compatibility check with WC 11.1.2
+
 2026.09.18 - version 1.2.30
 - Updated: Security hardening (settings/AJAX/upload/comment meta)
 - Updated: Compatibility check with PHP 8

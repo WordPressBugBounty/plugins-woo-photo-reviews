@@ -1976,7 +1976,12 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 		}
 
 		if ( ! empty( $_POST['photo-reviews-id'] ) ) {
-			update_comment_meta( $comment_id, 'reviews-images', array_map( 'absint', (array) wc_clean( wp_unslash( $_POST['photo-reviews-id'] ) ) ) );
+			$image_ids = viwcpr_filter_review_image_ids( (array) wc_clean( wp_unslash( $_POST['photo-reviews-id'] ) ) );
+			if ( ! empty( $image_ids ) ) {
+				update_comment_meta( $comment_id, 'reviews-images', $image_ids );
+			} elseif ( get_comment_meta( $comment_id, 'reviews-images', true ) ) {
+				delete_comment_meta( $comment_id, 'reviews-images' );
+			}
 		} elseif ( get_comment_meta( $comment_id, 'reviews-images', true ) ) {
 			delete_comment_meta( $comment_id, 'reviews-images' );
 		}
@@ -2384,11 +2389,18 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 	public function delete_reviews_image( $comment_id ) {
 		if ( get_comment_meta( $comment_id, 'reviews-images', true ) ) {
 			$image_post_ids = get_comment_meta( $comment_id, 'reviews-images', true );
+			if ( ! is_array( $image_post_ids ) ) {
+				return;
+			}
 			foreach ( $image_post_ids as $image_post_id ) {
-				if ( ! wc_is_valid_url( $image_post_id ) ) {
-					wp_delete_file( wp_get_attachment_url( $image_post_id ) );
-					wp_delete_post( $image_post_id, true );
+				if ( wc_is_valid_url( $image_post_id ) ) {
+					continue;
 				}
+				$image_post_id = absint( $image_post_id );
+				if ( ! $image_post_id || 'attachment' !== get_post_type( $image_post_id ) ) {
+					continue;
+				}
+				wp_delete_attachment( $image_post_id, true );
 			}
 		}
 	}

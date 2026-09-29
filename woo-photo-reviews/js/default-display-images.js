@@ -1,5 +1,20 @@
 jQuery(document).ready(function () {
     let $cur, $n, parent;
+
+    function wcprAppendBigReviewImage($container, imageSrc, borderRadius) {
+        $container.append(
+            jQuery('<img>', {
+                'class': 'big-review-images-content-img',
+                css: {
+                    float: 'left',
+                    display: 'block',
+                    borderRadius: borderRadius
+                },
+                src: imageSrc
+            })
+        );
+    }
+
     jQuery('body').on('click', '.reviews-images-item', function () {
         let currentRotate, rotateItem;
         parent = jQuery(this).parent().parent();
@@ -14,7 +29,11 @@ jQuery(document).ready(function () {
             jQuery(this).addClass('active-image');
             parent.find('.big-review-images-content').html('');
             parent.find('.big-review-images').hide();
-            parent.find('.big-review-images').find('.big-review-images-content').append('<img class="big-review-images-content-img" style="float:left;display: block;border-radius: 3px;" src="' + jQuery(this).attr('data-image_src') + '">')
+            wcprAppendBigReviewImage(
+                parent.find('.big-review-images').find('.big-review-images-content'),
+                jQuery(this).attr('data-image_src'),
+                '3px'
+            );
             parent.find('.big-review-images').css({'display': 'flex'});
         }
         if (currentRotate) {
@@ -40,7 +59,11 @@ jQuery(document).ready(function () {
         parent.find('.reviews-images-item').eq($cur).addClass('active-image');
         parent.find('.big-review-images-content').html('');
         parent.find('.big-review-images').hide();
-        parent.find('.big-review-images').find('.big-review-images-content').append('<img class="big-review-images-content-img" style="float:left;display: block;border-radius: 3px;" src="' + parent.find('.reviews-images-item').eq($cur).attr('data-image_src') + '">')
+        wcprAppendBigReviewImage(
+            parent.find('.big-review-images').find('.big-review-images-content'),
+            parent.find('.reviews-images-item').eq($cur).attr('data-image_src'),
+            '3px'
+        );
         parent.find('.big-review-images').css({'display': 'flex'});
         if (currentRotate) {
             rotateItem = parent.find('.big-review-images-content-img');
@@ -64,7 +87,11 @@ jQuery(document).ready(function () {
         parent.find('.reviews-images-item').eq($cur).addClass('active-image');
         parent.find('.big-review-images-content').html('');
         parent.find('.big-review-images').hide();
-        parent.find('.big-review-images').find('.big-review-images-content').append('<img class="big-review-images-content-img" style="float:left;display: block;border-radius: 4px;" src="' + parent.find('.reviews-images-item').eq($cur).attr('data-image_src') + '">')
+        wcprAppendBigReviewImage(
+            parent.find('.big-review-images').find('.big-review-images-content'),
+            parent.find('.reviews-images-item').eq($cur).attr('data-image_src'),
+            '4px'
+        );
         parent.find('.big-review-images').css({'display': 'flex'});
         if (currentRotate) {
             rotateItem = parent.find('.big-review-images-content-img');
