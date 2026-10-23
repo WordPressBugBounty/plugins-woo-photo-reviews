@@ -154,6 +154,10 @@ jQuery(document).ready(function ($) {
                                 if (response.img_id) {
                                     $container.append(`<input type="hidden" name="wcpr_image_upload_id" value="${response.img_id}">`);
                                 }
+                                if (response.img_id && /^[A-Za-z0-9]{32}$/.test(String(response.upload_token || ''))) {
+                                    $container.find('input[name="wcpr_upload_token"]').remove();
+                                    $container.append(`<input type="hidden" name="wcpr_upload_token" value="${response.upload_token}">`);
+                                }
                             }
                             resolve(error)
                         },

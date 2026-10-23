@@ -2,16 +2,14 @@
 Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: woocommerce reviews,product reviews image, customer reviews, review reminder, coupon
-Requires at least: 5.0
+Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-WC tested up to: 11.1.2
+WC tested up to: 11.2
 WC requires at least: 7.0
 Stable tag: trunk
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-
-Let customers attach photos to reviews, enhanced with filterable grids and overall ratings. Auto-send review reminders and coupon emails
 
 == Description ==
 
@@ -386,6 +384,13 @@ Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which
 2. Review on single product page
 
 == Changelog ==
+2026.10.23 - version 1.2.32
+- Fixed: Prevent duplicate review coupons for the same customer and product
+- Fixed: Only attach review photos from the current upload, and only delete photos bound to that review
+- Updated: PHP 8 guards for follow-up emails, coupon settings, uploads, and review images
+- Updated: WordPress requirement aligned to 6.0
+- Updated: Compatibility check with WC 11.2
+
 2026.09.29 - version 1.2.31
 - Fixed: Stored XSS when enlarging review photos (data-image_src)
 - Fixed: Only allow attachment IDs in review image meta; harden image cleanup on review delete

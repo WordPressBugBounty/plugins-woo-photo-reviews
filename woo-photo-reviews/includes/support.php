@@ -137,7 +137,7 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
                                         '&#8220;',
                                         '&#8243;',
                                         '„',
-                                ), '"', $match[1] ) );
+                                ), '"', $match[1] ), ENT_COMPAT );
                                 if ( $is_ads ) {
                                     $json = '{' . $json . '}';
                                 } else {

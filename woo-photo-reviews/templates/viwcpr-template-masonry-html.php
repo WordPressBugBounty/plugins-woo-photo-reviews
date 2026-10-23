@@ -6,6 +6,12 @@ if ( empty( $my_comments ) || ! is_array( $my_comments ) || empty( $settings ) )
 	return;
 }
 global $product;
+if ( ! is_a( $product, 'WC_Product' ) ) {
+	$product = wc_get_product( get_the_ID() );
+}
+if ( ! $product ) {
+	return;
+}
 $grid_class='';
 if (isset($cols)) {
 	$grid_class = array(
@@ -13,6 +19,8 @@ if (isset($cols)) {
 		'wcpr-masonry-' . $cols . '-col',
 	);
 }
+$data_image_caption = '';
+$prefix_class       = '';
 $product_title    = $product->get_title() . ' photo review';
 if ($grid_class){
     echo sprintf('<div class="%s">',esc_attr( trim( implode( ' ', $grid_class ) ) ) );
@@ -37,12 +45,13 @@ foreach ( $my_comments as $v ) {
 						foreach ( $img_post_ids as $img_post_ids_k => $img_post_id ) {
 							if ( ! wc_is_valid_url( $img_post_id ) ) {
 								$image_data     = wp_get_attachment_metadata( $img_post_id );
+								$image_data     = is_array( $image_data ) ? $image_data : array();
 								$alt            = get_post_meta( $img_post_id, '_wp_attachment_image_alt', true );
 								$image_alt      = $alt ? $alt : $product_title;
-								$data_image_src = wp_get_attachment_image_url( $img_post_id, 'full' );
+								$data_image_src = (string) wp_get_attachment_image_url( $img_post_id, 'full' );
 								$thumb          = wp_get_attachment_thumb_url( $img_post_id );
-								$is_video           = strpos( $image_data['mime_type'] ?? '', 'video/' ) === 0;
-//                                echo '<pre class="prrreeee">'.print_r($image_data,true).'</pre>';
+								$mime           = isset( $image_data['mime_type'] ) ? (string) $image_data['mime_type'] : '';
+								$is_video           = strpos( $mime, 'video/' ) === 0;
 								if (strpos($data_image_src,'.gif') ){
 									$href = $data_image_src;
 								}else {
@@ -95,10 +104,12 @@ foreach ( $my_comments as $v ) {
 				$first_ele  = array_shift( $clones );
 				if (! wc_is_valid_url( $first_ele )){
 					$image_data        = wp_get_attachment_metadata( $first_ele );
+					$image_data        = is_array( $image_data ) ? $image_data : array();
 					$alt               = get_post_meta( $first_ele, '_wp_attachment_image_alt', true );
 					$image_alt         = $alt ? $alt : $product_title;
-					$is_video          = strpos( $image_data['mime_type'] ?? '', 'video/' ) === 0;
-					$data_original_src = $is_video ? wp_get_attachment_url( $first_ele ) : wp_get_attachment_image_url( $first_ele, 'full' );
+					$mime              = isset( $image_data['mime_type'] ) ? (string) $image_data['mime_type'] : '';
+					$is_video          = strpos( $mime, 'video/' ) === 0;
+					$data_original_src = (string) ( $is_video ? wp_get_attachment_url( $first_ele ) : wp_get_attachment_image_url( $first_ele, 'full' ) );
 					$src        = $data_original_src;
 					$img_width         = $image_data['width'] ?? '';
 					$img_height        = $image_data['height'] ?? '';

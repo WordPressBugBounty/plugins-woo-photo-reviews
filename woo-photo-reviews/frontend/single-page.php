@@ -80,9 +80,12 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Single_Page {
 			return;
 		}
 		global $wp_query;
-		$post_id       = $wp_query->post->ID;
-		$product       = function_exists( 'wc_get_product' ) ? wc_get_product( $post_id ) : new WC_Product( $post_id );
-		$product_link  = wc_clean( $_SERVER['REQUEST_URI'] );
+		$post_id = $wp_query->post->ID;
+		$product = wc_get_product( $post_id );
+		if ( ! $product ) {
+			return;
+		}
+		$product_link  = isset( $_SERVER['REQUEST_URI'] ) ? wc_clean( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 		$product_link1 = $product->get_permalink();
 		$product_link  = remove_query_arg( array( 'image', 'verified', 'rating' ), $product_link );
 		$product_link1 = remove_query_arg( array( 'image', 'verified', 'rating' ), $product_link1 );

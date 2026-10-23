@@ -16,10 +16,12 @@ if ( get_comment_meta( $comment->comment_ID, 'reviews-images' ) ) {
 		foreach ( $image_post_ids as $image_post_id ) {
 			if ( ! wc_is_valid_url( $image_post_id ) ) {
 				$image_data  = wp_get_attachment_metadata( $image_post_id );
-				$is_video    = strpos( $image_data['mime_type'] ?? '', 'video/' ) === 0;
+				$image_data  = is_array( $image_data ) ? $image_data : array();
+				$mime        = isset( $image_data['mime_type'] ) ? (string) $image_data['mime_type'] : '';
+				$is_video    = strpos( $mime, 'video/' ) === 0;
 				$alt         = get_post_meta( $image_post_id, '_wp_attachment_image_alt', true );
 				$image_alt   = $alt ? $alt : $product_title;
-				$big_img_src = ( isset( $image_data['sizes']['wcpr-photo-reviews'] ) ? wp_get_attachment_image_url( $image_post_id, 'wcpr-photo-reviews' ) : ( isset( $image_data['sizes']['medium_large'] ) ? wp_get_attachment_image_url( $image_post_id, 'medium_large' ) : ( isset( $image_data['sizes']['medium'] ) ? wp_get_attachment_image_url( $image_post_id, 'medium' ) : wp_get_attachment_thumb_url( $image_post_id, 'full' ) ) ) );
+				$big_img_src = ( isset( $image_data['sizes']['wcpr-photo-reviews'] ) ? wp_get_attachment_image_url( $image_post_id, 'wcpr-photo-reviews' ) : ( isset( $image_data['sizes']['medium_large'] ) ? wp_get_attachment_image_url( $image_post_id, 'medium_large' ) : ( isset( $image_data['sizes']['medium'] ) ? wp_get_attachment_image_url( $image_post_id, 'medium' ) : wp_get_attachment_thumb_url( $image_post_id ) ) ) );
 				?>
                 <div class="reviews-images-item"
                      data-image_src="<?php echo esc_attr( apply_filters( 'woocommerce_photo_reviews_big_review_photo', $big_img_src, $image_post_id, $comment ) ) ?>"

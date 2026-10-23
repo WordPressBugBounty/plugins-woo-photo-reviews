@@ -392,10 +392,12 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
             if (is_a($date_create, 'WC_DateTime')) {
                 $date_create = $date_create->date_i18n($date_format);
             }
+            $date_create = (string) $date_create;
             $date_complete = $order->get_date_completed();
             if (is_a($date_complete, 'WC_DateTime')) {
                 $date_complete = $date_complete->date_i18n($date_format);
             }
+            $date_complete = (string) $date_complete;
             $items = $order->get_items();
             $products = array();
 
@@ -409,7 +411,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                 if ( ! is_email( $user_email ) ) {
                     return;
                 }
-                $customer_name = $order->get_billing_first_name();
+                $customer_name = (string) $order->get_billing_first_name();
                 $t_amount = $this->settings->get_params('followup_email', 'amount');
                 $t_unit = $this->settings->get_params('followup_email', 'unit');
                 switch ($t_unit) {
@@ -540,6 +542,9 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                 return;
             }
 
+            $customer_name = (string) $customer_name;
+            $date_create = (string) $date_create;
+            $date_complete = (string) $date_complete;
             $content = nl2br(stripslashes($this->settings->get_params('followup_email', 'content')));
             $content = str_replace('{customer_name}', $customer_name, $content);
             $content = str_replace('{order_id}', $order_id, $content);
@@ -618,18 +623,9 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
         for ($i = 0; $i < 6; $i++) {
             $code .= $this->rand();
         }
-        $args = array(
-            'post_type' => 'shop_coupon',
-            'post_status' => 'publish',
-            'posts_per_page' => 1,
-            'title' => $code
-        );
-        $the_query = new WP_Query($args);
-        if ($the_query->have_posts()) {
-            wp_reset_postdata();
-            $code = $this->create_code();
+        if ( wc_get_coupon_id_by_code( $code ) ) {
+            $code = $this->create_code( );
         }
-        wp_reset_postdata();
 
         return $code;
     }
@@ -677,6 +673,104 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
         return $code;
     }
 
+    private function review_coupon_claim_key( $user_id, $user_email, $product_id ) {
+        $product_id = absint($product_id);
+        $user_id = absint($user_id);
+        if ($user_id) {
+            return 'wcpr_coupon_claim_user_' . $user_id . '_' . $product_id;
+        }
+        $email = is_string($user_email) ? strtolower(trim($user_email)) : '';
+        $sanitized = sanitize_email($email);
+        if ('' !== $sanitized) {
+            $email = $sanitized;
+        }
+
+        return 'wcpr_coupon_claim_' . md5($email . '|' . $product_id);
+    }
+
+    private function claim_review_coupon( $user_id, $user_email, $product_id, $comment_id ) {
+        $key = $this->review_coupon_claim_key($user_id, $user_email, $product_id);
+        if ('' === $key) {
+            return false;
+        }
+
+        return add_option($key, 1, '', false);
+    }
+
+    private function release_review_coupon_claim( $user_id, $user_email, $product_id ) {
+        $key = $this->review_coupon_claim_key($user_id, $user_email, $product_id);
+        if ('' === $key) {
+            return;
+        }
+        delete_option($key);
+    }
+
+    private function issue_review_coupon( $user_id, $user_email, $customer_name,$product_id, $comment_id, $coupon_for_reviews = false,$user_coupon = null ) {
+        $key = $this->review_coupon_claim_key($user_id, $user_email, $product_id);
+        if ('' === $key || false !== get_option($key)) {
+            return ;
+        }
+        $user_id = absint($user_id);
+        if ($user_id) {
+            if (!is_array($user_coupon)) {
+                $user_coupon = get_user_meta($user_id, 'wcpr_user_reviewed_product', false);
+            }
+            if (!is_array($user_coupon)) {
+                $user_coupon = array();
+            }
+            if (in_array($product_id, $user_coupon)) {
+                return;
+            }
+        } else {
+            $comment_count = get_comments(array(
+                'post_type' => 'product',
+                'type' => 'review',
+                'author_email' => $user_email,
+                'post_id' => $product_id,
+                'count' => true,
+                'meta_query' => array(// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'id_import_reviews_from_ali',
+                        'compare' => 'NOT EXISTS'
+                    ),
+                    array(
+                        'key' => 'coupon_email',
+                        'compare' => 'EXISTS'
+                    ),
+                ),
+            ));
+            if ($comment_count) {
+                return;
+            }
+        }
+        if (!$this->claim_review_coupon($user_id, $user_email, $product_id, $comment_id)) {
+            return;
+        }
+        $code = $this->generate_coupon();
+        if (!$code) {
+            $this->release_review_coupon_claim($user_id, $user_email, $product_id);
+            return;
+        }
+        $c = new WC_Coupon($code);
+        if ($user_id) {
+            add_user_meta( $user_id, 'wcpr_user_reviewed_product', $product_id );
+        }
+        $er = $c->get_email_restrictions();
+        if ($this->settings->get_params('set_email_restriction') && !in_array($user_email, $er)) {
+            $er[] = $user_email;
+            $c->set_email_restrictions($er);
+            $c->save();
+        }
+        $coupon_code = $c->get_code();
+        $date_expires = $c->get_date_expires();
+        $this->send_email($user_email, $customer_name, $coupon_code, $date_expires, $comment_id);
+        update_comment_meta($comment_id, 'coupon_email', 'sent', true);
+        if ($coupon_for_reviews){
+            update_comment_meta($comment_id, 'coupon_for_reviews', 1);
+        }
+    }
+
     public function send_coupon_after_reviews( $comment_id, $commentdata ) {
         $comment = get_comment($comment_id);
         if (!get_comment_meta($comment_id, 'rating', true)) {
@@ -717,81 +811,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                 $user_id = $user->ID;
             }
         }
-        if ($user_id) {
-            $user_coupon = get_user_meta($user_id, 'wcpr_user_reviewed_product', false);
-            if (!count($user_coupon)) {
-                $code = $this->generate_coupon();
-
-                if ($code) {
-                    $c = new WC_Coupon($code);
-                    add_user_meta($user_id, 'wcpr_user_reviewed_product', $product_id);
-                    $er = $c->get_email_restrictions();
-                    if ($this->settings->get_params('set_email_restriction') && !in_array($user_email, $er)) {
-                        $er[] = $user_email;
-                        $c->set_email_restrictions($er);
-                        $c->save();
-                    }
-                    $coupon_code = $c->get_code();
-                    $date_expires = $c->get_date_expires();
-                    $this->send_email($user_email, $customer_name, $coupon_code, $date_expires, $comment_id);
-                    update_comment_meta($comment_id, 'coupon_email', 'sent', true);
-                }
-
-            } elseif (!in_array($product_id, $user_coupon)) {
-                $code = $this->generate_coupon();
-
-                if ($code) {
-                    $c = new WC_Coupon($code);
-                    add_user_meta($user_id, 'wcpr_user_reviewed_product', $product_id);
-                    $er = $c->get_email_restrictions();
-                    if ($this->settings->get_params('set_email_restriction') && !in_array($user_email, $er)) {
-                        $er[] = $user_email;
-                        $c->set_email_restrictions($er);
-                        $c->save();
-                    }
-                    $coupon_code = $c->get_code();
-                    $date_expires = $c->get_date_expires();
-                    $this->send_email($user_email, $customer_name, $coupon_code, $date_expires, $comment_id);
-                    update_comment_meta($comment_id, 'coupon_email', 'sent', true);
-                }
-            }
-        } else {
-            $args = array(
-                'post_type' => 'product',
-                'type' => 'review',
-                'author_email' => $user_email,
-                'post_id' => $product_id,
-                'meta_query' => array(// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-                    'relation' => 'AND',
-                    array(
-                        'key' => 'id_import_reviews_from_ali',
-                        'compare' => 'NOT EXISTS'
-                    ),
-                    array(
-                        'key' => 'coupon_email',
-                        'compare' => 'EXISTS'
-                    ),
-                )
-            );
-            $comments = get_comments($args);
-            if (!count($comments)) {
-                $code = $this->generate_coupon();
-
-                if ($code) {
-                    $c = new WC_Coupon($code);
-                    $er = $c->get_email_restrictions();
-                    if ($this->settings->get_params('set_email_restriction') && !in_array($user_email, $er)) {
-                        $er[] = $user_email;
-                        $c->set_email_restrictions($er);
-                        $c->save();
-                    }
-                    $coupon_code = $c->get_code();
-                    $date_expires = $c->get_date_expires();
-                    $this->send_email($user_email, $customer_name, $coupon_code, $date_expires, $comment_id);
-                    update_comment_meta($comment_id, 'coupon_email', 'sent', true);
-                }
-            }
-        }
+        $this->issue_review_coupon($user_id, $user_email,$customer_name, $product_id, $comment_id);
     }
 
     public function coupon_for_not_logged_in( $comment_id ) {
@@ -825,84 +845,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                     $user_id = $user->ID;
                 }
             }
-            if ($user_id) {
-                $user_coupon = get_user_meta($user_id, 'wcpr_user_reviewed_product', false);
-                if (!$user_coupon || !count($user_coupon)) {
-                    $code = $this->generate_coupon();
-                    if ($code) {
-                        $c = new WC_Coupon($code);
-                        $er = $c->get_email_restrictions();
-                        if ($this->settings->get_params('set_email_restriction') && !in_array($user_email, $er)) {
-                            $er[] = $user_email;
-                            $c->set_email_restrictions($er);
-                            $c->save();
-                        }
-                        $coupon_code = $c->get_code();
-                        $date_expires = $c->get_date_expires();
-                        $this->send_email($user_email, $customer_name, $coupon_code, $date_expires, $comment_id);
-                        add_user_meta($user_id, 'wcpr_user_reviewed_product', $product_id);
-                        update_comment_meta($comment_id, 'coupon_email', 'sent', true);
-                        update_comment_meta($comment_id, 'coupon_for_reviews', 1);
-                    }
-
-                } elseif (!in_array($product_id, $user_coupon)) {
-                    $code = $this->generate_coupon();
-
-                    if ($code) {
-                        $c = new WC_Coupon($code);
-                        add_user_meta($user_id, 'wcpr_user_reviewed_product', $product_id);
-                        $er = $c->get_email_restrictions();
-                        if ($this->settings->get_params('set_email_restriction') && !in_array($user_email, $er)) {
-                            $er[] = $user_email;
-                            $c->set_email_restrictions($er);
-                            $c->save();
-                        }
-                        $coupon_code = $c->get_code();
-                        $date_expires = $c->get_date_expires();
-                        $this->send_email($user_email, $customer_name, $coupon_code, $date_expires, $comment_id);
-                        update_comment_meta($comment_id, 'coupon_email', 'sent', true);
-                        update_comment_meta($comment_id, 'coupon_for_reviews', 1);
-                    }
-                }
-            } else {
-                $args = array(
-                    'post_type' => 'product',
-                    'type' => 'review',
-                    'author_email' => $user_email,
-                    'post_id' => $product_id,
-                    'meta_query' => array(// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-                        'relation' => 'AND',
-                        array(
-                            'key' => 'id_import_reviews_from_ali',
-                            'compare' => 'NOT EXISTS'
-                        ),
-                        array(
-                            'key' => 'coupon_email',
-                            'compare' => 'EXISTS'
-                        ),
-                    )
-                );
-                $comments = get_comments($args);
-                if (!count($comments)) {
-                    $code = $this->generate_coupon();
-
-                    if ($code) {
-                        $c = new WC_Coupon($code);
-                        $er = $c->get_email_restrictions();
-                        if ($this->settings->get_params('set_email_restriction') && !in_array($user_email, $er)) {
-                            $er[] = $user_email;
-                            $c->set_email_restrictions($er);
-                            $c->save();
-                        }
-                        $coupon_code = $c->get_code();
-                        $date_expires = $c->get_date_expires();
-                        $this->send_email($user_email, $customer_name, $coupon_code, $date_expires, $comment_id);
-                        update_comment_meta($comment_id, 'coupon_email', 'sent', true);
-                        update_comment_meta($comment_id, 'coupon_for_reviews', 1);
-                    }
-                }
-            }
-
+            $this->issue_review_coupon($user_id, $user_email,$customer_name, $product_id, $comment_id,true);
         }
     }
 
@@ -1092,6 +1035,10 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                 $result['error'] = wc_print_notices(true);
             } elseif (count($img_id)) {
                 $result['img_id'] = implode(',', $img_id);
+                $upload_token = viwcpr_current_review_upload_token();
+                if (preg_match('/^[A-Za-z0-9]{32}$/', $upload_token)) {
+                    $result['upload_token'] = $upload_token;
+                }
             }
             $result['remove_upload_file'] = 1;
         }
@@ -1169,12 +1116,17 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
         }
         $img_id = array();
         $error = false;
+        viwcpr_begin_review_upload_token();
         viwcpr_set_time_limit();
         add_filter('intermediate_image_sizes', array($this, 'reduce_image_sizes'));
         require_once(ABSPATH . 'wp-admin/includes/image.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         $files = isset($_FILES['wcpr_image_upload']) ? $_FILES['wcpr_image_upload'] : array();// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        if (!isset($files['name']) || !is_array($files['name'])) {
+            remove_filter('intermediate_image_sizes', array($this, 'reduce_image_sizes'));
+            return $img_id;
+        }
         if (is_array($files['name'][0])) {
             foreach ($files['name'] as $key => $value) {
                 viwcpr_set_time_limit();
@@ -1195,6 +1147,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                         $error = true;
                         break;
                     } else {
+                        viwcpr_stamp_review_attachment($attachment_id);
                         $img_id[] = $attachment_id;
                     }
                 }
@@ -1219,6 +1172,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                         $error = true;
                         break;
                     } else {
+                        viwcpr_stamp_review_attachment($attachment_id);
                         $img_id[] = $attachment_id;
                     }
                 }
@@ -1232,20 +1186,22 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
         if (!isset($_POST['wcpr_image_upload_nonce']) || !wp_verify_nonce(wc_clean($_POST['wcpr_image_upload_nonce']), 'wcpr_image_upload')) {
             return $comment;
         }
-        if (!isset($_POST['wcpr_image_upload_id'])) {
-            $comment_type = isset($comment['comment_type']) ? $comment['comment_type'] : '';
-            if (!is_admin() && isset($_POST['comment_post_ID'], $comment['comment_type']) && 'product' === get_post_type(absint(wc_clean($_POST['comment_post_ID']))) && ('' === $comment_type || 'comment' === $comment_type)) {
-                $comment_type = $comment['comment_type'] = 'review';
-            }
-            $link = !empty($comment['comment_post_ID']) ? get_permalink($comment['comment_post_ID']) : home_url();
+        $has_upload_id = isset($_POST['wcpr_image_upload_id']);
+        $comment_type = isset($comment['comment_type']) ? $comment['comment_type'] : '';
+        if (!is_admin() && isset($_POST['comment_post_ID'], $comment['comment_type']) && 'product' === get_post_type(absint(wc_clean($_POST['comment_post_ID']))) && ('' === $comment_type || 'comment' === $comment_type)) {
+            $comment_type = $comment['comment_type'] = 'review';
+        }
+        $link = !empty($comment['comment_post_ID']) ? get_permalink($comment['comment_post_ID']) : home_url();
+        $has_files = $this->review_request_has_image_files();
+        if ('review' === $comment_type && 'on' == $this->settings->get_params('photo', 'gdpr') && ($has_upload_id || $has_files) && empty($_POST['wcpr_gdpr_checkbox'])) {
+            wc_add_notice(esc_html__('Please agree with the GDPR policy!', 'woo-photo-reviews'), 'error');
+            do_action('woocommerce_set_cart_cookies', true);
+            wp_safe_redirect($link);
+            exit;
+        }
+        if (!$has_upload_id) {
             if ($comment_type !== 'review') {
                 return $comment;
-            }
-            if (('on' == $this->settings->get_params('photo', 'gdpr')) && empty($_POST['wcpr_gdpr_checkbox'])) {
-                wc_add_notice(esc_html__('Please agree with the GDPR policy!', 'woo-photo-reviews'), 'error');
-                do_action('woocommerce_set_cart_cookies', true);
-                wp_safe_redirect($link);
-                exit;
             }
             $error = self::check_upload_file();
             if ($error) {
@@ -1262,10 +1218,31 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
         return $comment;
     }
 
-    public function add_review_image( $comment_id ) {
+    /**
+     * Whether the review request includes a selected image file.
+     *
+     * @return bool
+     */
+    private function review_request_has_image_files() {
+        if (empty($_FILES['wcpr_image_upload']['name'])) {
+            return false;
+        }
+        $names = villatheme_array_flatten((array) $_FILES['wcpr_image_upload']['name'], false);
+        foreach ($names as $name) {
+            if (is_string($name) && '' !== $name) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public function add_review_image( $comment_id ) {
+        if ('on' !== $this->settings->get_params('photo', 'enable')) {
+            return;
+        }
         if (isset($_POST['wcpr_image_upload_id'])) {// phpcs:ignore WordPress.Security.NonceVerification.Missing
             $img_id = explode(',', wc_clean(wp_unslash($_POST['wcpr_image_upload_id'])));// phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $token = isset($_POST['wcpr_upload_token']) ? sanitize_text_field(wp_unslash($_POST['wcpr_upload_token'])) : '';// phpcs:ignore WordPress.Security.NonceVerification.Missing
         } else {
             $post_id = get_comment($comment_id)->comment_post_ID;
             $img_id = $this->upload_file($comment_id, $post_id);
@@ -1273,10 +1250,14 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
                 wp_safe_redirect($post_id ? get_permalink($post_id) : home_url());
                 exit;
             }
+            $token = viwcpr_current_review_upload_token();
         }
-        $img_id = viwcpr_filter_review_image_ids( $img_id );
+        $img_id = viwcpr_filter_owned_review_image_ids( $img_id, $token );
         if (is_array($img_id) && count($img_id)) {
             update_comment_meta($comment_id, 'reviews-images', $img_id);
+            foreach ($img_id as $attachment_id) {
+                update_post_meta($attachment_id, '_wcpr_bound_comment', absint($comment_id));
+            }
         }
         update_comment_meta($comment_id, 'gdpr_agree', 1);
     }
@@ -1366,7 +1347,7 @@ class VI_WOO_PHOTO_REVIEWS_Frontend_Frontend {
         }
 
         if ($rating) {
-            if ($vars->query_vars['meta_query']) {
+            if (!empty($vars->query_vars['meta_query'])) {
                 $vars->query_vars['meta_query']['relation'] = 'AND';
                 $vars->query_vars['meta_query'][] = array(
                     'key' => 'rating',

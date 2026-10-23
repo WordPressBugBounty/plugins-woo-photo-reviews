@@ -3,7 +3,7 @@
 Class Name: VI_WOO_PHOTO_REVIEWS_Admin_Admin
 Author: Andy Ha (support@villatheme.com)
 Author URI: http://villatheme.com
-Copyright 2018 villatheme.com. All rights reserved.
+Copyright 2018-2026 villatheme.com. All rights reserved.
 */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -52,10 +52,11 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 	}
 
 	public function load_plugin_textdomain() {
-		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
-		$locale = apply_filters( 'plugin_locale', $locale, 'woo-photo-reviews' );
-		load_textdomain( 'woo-photo-reviews', WP_PLUGIN_DIR . "/woo-photo-reviews/languages/woo-photo-reviews-$locale.mo" );
-		load_plugin_textdomain( 'woo-photo-reviews', false, basename( dirname( __FILE__ ) ) . "/languages" );
+		load_plugin_textdomain(
+			'woo-photo-reviews',
+			false,
+			dirname( plugin_basename( WOO_PHOTO_REVIEWS_DIR . 'woo-photo-reviews.php' ) ) . '/languages'
+		);
 		if ( class_exists( 'VillaTheme_Support' ) ) {
 			new VillaTheme_Support(
 				array(
@@ -97,7 +98,8 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 						continue;
 					}
 					if ( ! $user_id ) {
-						$user_id = get_user_by( 'email', $comment->comment_author_email );
+						$user    = get_user_by( 'email', $comment->comment_author_email );
+						$user_id = ( $user instanceof WP_User ) ? $user->ID : 0;
 					}
 					if ( $user_id ) {
 						$user_coupon = get_user_meta( $user_id, 'wcpr_user_reviewed_product', false );
@@ -107,7 +109,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 					}
 				}
 			}
-			set_transient( 'woocommerce_photo_review_update_data_version_1_1_0', current_time( 'timestamp' ) );
+			set_transient( 'woocommerce_photo_review_update_data_version_1_1_0', time() );
 		}
 
 	}
@@ -260,7 +262,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			$content                = str_replace( '{site_title}', get_bloginfo( 'name' ), $content );
 			$content                .= '<table style="width: 100%;">';
 			$sents                  = array();
-			$products               = wc_get_products( array( 'numberposts' => 3, 'post_status' => 'public' ) );
+			$products               = wc_get_products( array( 'limit' => 3, 'status' => 'publish' ) );
 			if ( count( $products ) ) {
 				foreach ( $products as $p ) {
 					$product = wc_get_product( $p );
@@ -367,7 +369,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                 <tr>
                     <td><?php esc_html_e( 'Upload max filesize:', 'woo-photo-reviews' ) ?></td>
                     <td><?php echo esc_html( ini_get( 'upload_max_filesize' ) ); ?></td>
-                    <td><?php if ( ini_get( 'post_max_size' ) > ( absint( ini_get( 'upload_max_filesize' ) ) * ini_get( 'max_file_uploads' ) + 1 ) && ini_get( 'upload_max_filesize' ) > 0 && ini_get( 'max_file_uploads' ) > 0 ) {
+                    <td><?php if ( absint( ini_get( 'post_max_size' ) ) > ( absint( ini_get( 'upload_max_filesize' ) ) * absint( ini_get( 'max_file_uploads' ) ) + 1 ) && absint( ini_get( 'upload_max_filesize' ) ) > 0 && absint( ini_get( 'max_file_uploads' ) ) > 0 ) {
 							printf( '<span class="status-ok">OK</span>' );
 						} else {
 							printf( '<span class="status-bad">X</span>' );
@@ -376,7 +378,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                 <tr>
                     <td><?php esc_html_e( 'Max file uploads:', 'woo-photo-reviews' ) ?></td>
                     <td><?php echo esc_html( ini_get( 'max_file_uploads' ) ); ?></td>
-                    <td><?php if ( ini_get( 'post_max_size' ) > ( absint( ini_get( 'upload_max_filesize' ) ) * ini_get( 'max_file_uploads' ) + 1 ) && ini_get( 'upload_max_filesize' ) > 0 && ini_get( 'max_file_uploads' ) > 0 ) {
+                    <td><?php if ( absint( ini_get( 'post_max_size' ) ) > ( absint( ini_get( 'upload_max_filesize' ) ) * absint( ini_get( 'max_file_uploads' ) ) + 1 ) && absint( ini_get( 'upload_max_filesize' ) ) > 0 && absint( ini_get( 'max_file_uploads' ) ) > 0 ) {
 							printf( '<span class="status-ok">OK</span>' );
 						} else {
 							printf( '<span class="status-bad">X</span>' );
@@ -385,7 +387,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                 <tr>
                     <td><?php esc_html_e( 'Post maxsize:', 'woo-photo-reviews' ) ?></td>
                     <td><?php echo esc_html( ini_get( 'post_max_size' ) ); ?></td>
-                    <td><?php if ( ini_get( 'post_max_size' ) > ( absint( ini_get( 'upload_max_filesize' ) ) * ini_get( 'max_file_uploads' ) + 1 ) && ini_get( 'upload_max_filesize' ) > 0 && ini_get( 'max_file_uploads' ) > 0 ) {
+                    <td><?php if ( absint( ini_get( 'post_max_size' ) ) > ( absint( ini_get( 'upload_max_filesize' ) ) * absint( ini_get( 'max_file_uploads' ) ) + 1 ) && absint( ini_get( 'upload_max_filesize' ) ) > 0 && absint( ini_get( 'max_file_uploads' ) ) > 0 ) {
 							printf( '<span class="status-ok">OK</span>' );
 						} else {
 							printf( '<span class="status-bad">X</span>' );
@@ -1297,10 +1299,12 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                         class="coupon-search select2-selection--single"
                                         data-placeholder="<?php esc_html_e( 'Please Fill In Your Coupon Code', 'woo-photo-reviews' ) ?>">
 									<?php
-									if ( '' !== $this->settings->get_params( 'coupon', 'existing_coupon' ) ) {
+									$existing_coupon_id = $this->settings->get_params( 'coupon', 'existing_coupon' );
+									$existing_coupon    = ( '' !== $existing_coupon_id && false !== $existing_coupon_id ) ? get_post( $existing_coupon_id ) : null;
+									if ( $existing_coupon ) {
 										printf( '<option value="%s" selected>%s</option>',
-											esc_attr( $this->settings->get_params( 'coupon', 'existing_coupon' ) ),
-											esc_html( get_post( $this->settings->get_params( 'coupon', 'existing_coupon' ) )->post_title )
+											esc_attr( $existing_coupon_id ),
+											esc_html( $existing_coupon->post_title )
 										);
 									}
 									?>
@@ -1414,7 +1418,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                         class="product-search"
                                         data-placeholder="<?php esc_html_e( 'Please Fill In Your Product Title', 'woo-photo-reviews' ) ?>">
 									<?php
-									$product_ids = $coupon_generate['product_ids'];
+									$product_ids = ( isset( $coupon_generate['product_ids'] ) && is_array( $coupon_generate['product_ids'] ) ) ? $coupon_generate['product_ids'] : array();
 									if ( count( $product_ids ) ) {
 										foreach ( $product_ids as $ps ) {
 											$product = wc_get_product( $ps );
@@ -1441,7 +1445,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                         class="product-search"
                                         data-placeholder="<?php esc_html_e( 'Please Fill In Your Product Title', 'woo-photo-reviews' ) ?>">
 									<?php
-									$excluded_product_ids = $coupon_generate['excluded_product_ids'];
+									$excluded_product_ids = ( isset( $coupon_generate['excluded_product_ids'] ) && is_array( $coupon_generate['excluded_product_ids'] ) ) ? $coupon_generate['excluded_product_ids'] : array();
 									if ( count( $excluded_product_ids ) ) {
 										foreach ( $excluded_product_ids as $ps ) {
 											$product = wc_get_product( $ps );
@@ -1470,7 +1474,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                         name="kt_product_categories[]" multiple="multiple"
                                         class="category-search select2-selection--multiple">
 									<?php
-									$product_categories = $coupon_generate['product_categories'];
+									$product_categories = ( isset( $coupon_generate['product_categories'] ) && is_array( $coupon_generate['product_categories'] ) ) ? $coupon_generate['product_categories'] : array();
 									if ( count( $product_categories ) ) {
 										foreach ( $product_categories as $category_id ) {
 											$category = get_term( $category_id );
@@ -1496,7 +1500,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
                                         name="kt_excluded_product_categories[]" multiple="multiple"
                                         class="category-search select2-selection--multiple">
 									<?php
-									$excluded_categories = $coupon_generate['excluded_product_categories'];
+									$excluded_categories = ( isset( $coupon_generate['excluded_product_categories'] ) && is_array( $coupon_generate['excluded_product_categories'] ) ) ? $coupon_generate['excluded_product_categories'] : array();
 									if ( count( $excluded_categories ) ) {
 										foreach ( $excluded_categories as $category_id ) {
 											$category = get_term( $category_id );
@@ -1992,6 +1996,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 		printf( '<div class="kt-wc-reviews-images-wrap-wrap">' );
 		if ( get_comment_meta( $comment->comment_ID, 'reviews-images' ) ) {
 			$image_post_ids = get_comment_meta( $comment->comment_ID, 'reviews-images', true );
+			if ( is_array( $image_post_ids ) ) {
 			foreach ( $image_post_ids as $image_post_id ) {
 				if ( ! wc_is_valid_url( $image_post_id ) ) {
 					$image_data = wp_get_attachment_metadata( $image_post_id );
@@ -2026,6 +2031,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 					<?php
 				}
 			}
+			}
 		}
 		?>
         <div id="wcpr-new-image" style="float: left;">
@@ -2057,7 +2063,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 	public function column_callback( $col, $comment_id ) {
 		switch ( $col ) {
 			case 'wcpr_photos':
-				if ( ( $image_post_ids = get_comment_meta( $comment_id, 'reviews-images', true ) ) && sizeof( $image_post_ids ) ) {
+				if ( ( $image_post_ids = get_comment_meta( $comment_id, 'reviews-images', true ) ) && is_array( $image_post_ids ) && sizeof( $image_post_ids ) ) {
 					printf( '<div class="kt-wc-reviews-images-wrap-wrap">' );
 					foreach ( $image_post_ids as $image_post_id ) {
 						if ( ! wc_is_valid_url( $image_post_id ) ) {
@@ -2236,7 +2242,7 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 			)
 		);
 		$items      = array();
-		if ( count( $categories ) ) {
+		if ( ! is_wp_error( $categories ) && count( $categories ) ) {
 			foreach ( $categories as $category ) {
 				$item    = array(
 					'id'   => $category->term_id,
@@ -2398,6 +2404,12 @@ class VI_WOO_PHOTO_REVIEWS_Admin_Admin {
 				}
 				$image_post_id = absint( $image_post_id );
 				if ( ! $image_post_id || 'attachment' !== get_post_type( $image_post_id ) ) {
+					continue;
+				}
+				if ( '1' !== (string) get_post_meta( $image_post_id, '_wcpr_review_attachment', true ) ) {
+					continue;
+				}
+				if ( (int) get_post_meta( $image_post_id, '_wcpr_bound_comment', true ) !== (int) $comment_id ) {
 					continue;
 				}
 				wp_delete_attachment( $image_post_id, true );

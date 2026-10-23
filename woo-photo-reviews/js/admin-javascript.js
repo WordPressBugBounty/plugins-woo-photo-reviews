@@ -16,7 +16,7 @@ jQuery(document).ready(function ($) {
         panelSelector = '.vi-ui.tab',
         panelFilter = function () {
             jQuery(panelSelector + ' a').filter(function () {
-                return jQuery(navSelector + ' a[title=' + jQuery(this).attr('title') + ']').size() != 0;
+                return jQuery(navSelector + ' a[title=' + jQuery(this).attr('title') + ']').length != 0;
             });
         };
 
