@@ -11,6 +11,8 @@ Stable tag: trunk
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+Let customers attach photos to reviews, enhanced with filterable grids and overall ratings. Auto-send review reminders and coupon emails
+
 == Description ==
 
 Photo Reviews for WooCommerce is an ultimate review plugin for WooCommerce which helps you send review reminder emails, allows customers to post reviews include product pictures and send thank you emails with WooCommerce coupons to customers.
